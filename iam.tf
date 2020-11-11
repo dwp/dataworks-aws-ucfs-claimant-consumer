@@ -7,10 +7,10 @@ resource "aws_iam_role" "claimant_api_kafka_consumer" {
   assume_role_policy = data.terraform_remote_state.common.outputs.ecs_assume_role_policy_json
 
   tags = merge(
-  local.common_tags,
-  {
-    Name = local.iam_name
-  }
+    local.common_tags,
+    {
+      Name = local.iam_name
+    }
   )
 }
 

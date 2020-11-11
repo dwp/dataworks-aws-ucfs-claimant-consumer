@@ -1,5 +1,5 @@
 resource "aws_cloudwatch_log_group" "claimant_api_kafka_consumer" {
-  name = "/aws/ecs/ingestion-ecs-cluster/${var.friendly_name}" //TODO: get cluster name from remote state and rename it to `ingest`
+  name              = "/aws/ecs/${data.terraform_remote_state.ingestion.outputs.ingestion_ecs_cluster.name}/${var.friendly_name}" //TODO: get cluster name from remote state and rename it to `ingest`
   retention_in_days = "180"
   tags = merge(
     local.common_tags,
@@ -37,7 +37,7 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
       "logDriver": "awslogs",
       "options": {
         "awslogs-group": "${aws_cloudwatch_log_group.claimant_api_kafka_consumer.name}",
-        "awslogs-region": "${var.region}",
+        "awslogs-region": "${var.region}"
       }
     },
     "placementStrategy": [
@@ -66,5 +66,14 @@ DEFINITION
 }
 
 resource "aws_ecs_service" "claimant_api_kafka_consumer" {
-  name = "claimant-api-kafka-consumer"
+  name            = "claimant-api-kafka-consumer"
+  cluster         = data.terraform_remote_state.ingestion.outputs.ingestion_ecs_cluster.id
+  task_definition = aws_ecs_task_definition.claimant_api_kafka_consumer.arn
+  desired_count   = 3
+  launch_type     = "EC2"
+
+  network_configuration {
+    security_groups = [data.terraform_remote_state.ingestion.outputs.ingestion_ecs_cluster_security_group.id]
+    subnets         = data.terraform_remote_state.ingestion.outputs.ingestion_subnets.id
+  }
 }
