@@ -27,6 +27,7 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
     }
   )
 
+//  TODO: Fill container env var values
   container_definitions = <<DEFINITION
 [
   {
@@ -57,7 +58,63 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
       },
       {
         "name": "RETRIEVER_ACM_CERT_ARN",
-        "value": "${aws_acm_certificate.ucfs_claimant_kafka_consumer.arn}"
+        "value": "${aws_service_not_defined.needs_replacing}"
+      },
+      {
+        "name": "KAFKA_BOOTSTRAP_SERVERS",
+        "value": "${aws_service_not_defined.needs_replacing}"
+      },
+      {
+        "name": "KAFKA_CONSUMER_GROUP",
+        "value": "${aws_service_not_defined.needs_replacing}"
+      },
+      {
+        "name": "KAFKA_FETCH_MAX_BYTES",
+        "value": "${aws_service_not_defined.needs_replacing}"
+      },
+      {
+        "name": "KAFKA_KEY_PASSWORD",
+        "value": "${aws_service_not_defined.needs_replacing}"
+      },
+      {
+        "name": "KAFKA_KEYSTORE",
+        "value": "${aws_service_not_defined.needs_replacing}"
+      },
+      {
+        "name": "KAFKA_KEYSTORE_PASSWORD",
+        "value": "${aws_service_not_defined.needs_replacing}"
+      },
+      {
+        "name": "KAFKA_MAX_PARTITION_FETCH_BYTES",
+        "value": "${aws_service_not_defined.needs_replacing}"
+      },
+      {
+        "name": "KAFKA_MAX_POLL_INTERVAL_MS",
+        "value": "${aws_service_not_defined.needs_replacing}"
+      },
+      {
+        "name": "KAFKA_MAX_POLL_RECORDS",
+        "value": "${aws_service_not_defined.needs_replacing}"
+      },
+      {
+        "name": "KAFKA_POLL_DURATION_SECONDS",
+        "value": "${aws_service_not_defined.needs_replacing}"
+      },
+      {
+        "name": "KAFKA_TOPIC_REGEX",
+        "value": "${aws_service_not_defined.needs_replacing}"
+      },
+      {
+        "name": "KAFKA_TRUSTSTORE",
+        "value": "${aws_service_not_defined.needs_replacing}"
+      },
+      {
+        "name": "KAFKA_TRUSTSTORE_PASSWORD",
+        "value": "${aws_service_not_defined.needs_replacing}"
+      },
+      {
+        "name": "KAFKA_USE_SSL",
+        "value": "${aws_service_not_defined.needs_replacing}"
       }
     ]
   }
