@@ -53,7 +53,7 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
       },
       {
         "name": "LOG_LEVEL",
-        "value": "${local.claimant_api_kafka_consumer_task_configs.log_level[local.environment]}"
+        "value": "${local.log_level[local.environment]}"
       },
       {
         "name": "RETRIEVER_ACM_CERT_ARN",
@@ -61,35 +61,35 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
       },
       {
         "name": "KAFKA_BOOTSTRAP_SERVERS",
-        "value": "${local.claimant_api_kafka_consumer_task_configs.kafka_bootstrap_servers}"
+        "value": "${local.kafka_bootstrap_servers}"
       },
       {
         "name": "KAFKA_CONSUMER_GROUP",
-        "value": "${local.claimant_api_kafka_consumer_task_configs.kafka_consumer_group}"
+        "value": "${local.kafka_consumer_group}"
       },
       {
         "name": "KAFKA_FETCH_MAX_BYTES",
-        "value": "${local.claimant_api_kafka_consumer_task_configs.kafka_fetch_max_bytes[local.environment]}"
+        "value": "${local.kafka_fetch_max_bytes[local.environment]}"
       },
       {
         "name": "KAFKA_MAX_PARTITION_FETCH_BYTES",
-        "value": "${local.claimant_api_kafka_consumer_task_configs.kafka_max_partition_fetch_bytes[local.environment]}"
+        "value": "${local.kafka_max_partition_fetch_bytes[local.environment]}"
       },
       {
         "name": "KAFKA_MAX_POLL_INTERVAL_MS",
-        "value": "${local.claimant_api_kafka_consumer_task_configs.kafka_max_poll_interval_ms[local.environment]}"
+        "value": "${local.kafka_max_poll_interval_ms[local.environment]}"
       },
       {
         "name": "KAFKA_MAX_POLL_RECORDS",
-        "value": "${local.claimant_api_kafka_consumer_task_configs.kafka_max_poll_records[local.environment]}"
+        "value": "${local.kafka_max_poll_records[local.environment]}"
       },
       {
         "name": "KAFKA_POLL_DURATION_SECONDS",
-        "value": "${local.claimant_api_kafka_consumer_task_configs.kafka_poll_duration_seconds[local.environment]}"
+        "value": "${local.kafka_poll_duration_seconds[local.environment]}"
       },
       {
         "name": "KAFKA_TOPIC_REGEX",
-        "value": "${local.claimant_api_kafka_consumer_task_configs.kafka_topic_regex[local.environment]}"
+        "value": "${local.kafka_topic_regex[local.environment]}"
       },
       {
         "name": "KAFKA_CONSUMER_TRUSTSTORE_CERTS",
@@ -98,7 +98,7 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
       {
         "name": "KAFKA_CONSUMER_TRUSTSTORE_ALIASES",
         "value": "${local.kafka_consumer_truststore_aliases[local.environment]}"
-      },
+      }
     ]
   }
 ]

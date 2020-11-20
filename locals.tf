@@ -1,12 +1,12 @@
 locals {
 
   certificate_auth_public_cert_bucket = data.terraform_remote_state.certificate_authority.outputs.public_cert_bucket
-  k2hb_data_source_is_ucfs     = data.terraform_remote_state.ingest.outputs.locals.k2hb_data_source_is_ucfs
-  stub_bootstrap_servers       = data.terraform_remote_state.ingest.outputs.locals.stub_bootstrap_servers
-  stub_kafka_broker_port_https = data.terraform_remote_state.ingest.outputs.locals.stub_kafka_broker_port_https
-  ucfs_ha_broker_prefix        = data.terraform_remote_state.ingest.outputs.locals.ucfs_ha_broker_prefix
-  ucfs_london_domains          = data.terraform_remote_state.ingest.outputs.locals.ucfs_london_domains
-  uc_kafka_broker_port_https   = data.terraform_remote_state.ingest.outputs.locals.uc_kafka_broker_port_https
+  k2hb_data_source_is_ucfs            = data.terraform_remote_state.ingest.outputs.locals.k2hb_data_source_is_ucfs
+  stub_bootstrap_servers              = data.terraform_remote_state.ingest.outputs.locals.stub_bootstrap_servers
+  stub_kafka_broker_port_https        = data.terraform_remote_state.ingest.outputs.locals.stub_kafka_broker_port_https
+  ucfs_ha_broker_prefix               = data.terraform_remote_state.ingest.outputs.locals.ucfs_ha_broker_prefix
+  ucfs_london_domains                 = data.terraform_remote_state.ingest.outputs.locals.ucfs_london_domains
+  uc_kafka_broker_port_https          = data.terraform_remote_state.ingest.outputs.locals.uc_kafka_broker_port_https
 
   ucfs_london_current_domain = local.ucfs_london_domains[local.environment]
 
@@ -56,74 +56,72 @@ locals {
     production  = "s3://${local.certificate_auth_public_cert_bucket.id}/ca_certificates/ucfs/root_ca.pem,s3://${local.certificate_auth_public_cert_bucket.id}/ca_certificates/ucfs/root_ca_old.pem"
   }
 
-  claimant_api_kafka_consumer_task_configs {
-    log_level = {
-      development = "DEBUG"
-      qa          = "INFO"
-      integration = "INFO"
-      preprod     = "INFO"
-      production  = "INFO"
-    }
+  log_level = {
+    development = "DEBUG"
+    qa          = "INFO"
+    integration = "INFO"
+    preprod     = "INFO"
+    production  = "INFO"
+  }
 
-    kafka_bootstrap_servers = join(
-      ",",
-      formatlist(
-        "%s:%s",
-        local.kafka_london_bootstrap_servers[local.environment],
-        local.kafka_broker_port[local.environment],
-      ),
-    )
+  kafka_bootstrap_servers = join(
+    ",",
+    formatlist(
+      "%s:%s",
+      local.kafka_london_bootstrap_servers[local.environment],
+      local.kafka_broker_port[local.environment],
+    ),
+  )
 
-    kafka_consumer_group = "dataworks-ucfs-kafka-to-hbase-ingest-${local.environment}"
+  kafka_consumer_group = "dataworks-ucfs-kafka-to-hbase-ingest-${local.environment}"
 
-    kafka_fetch_max_bytes = {
-      development = 20000000
-      qa          = 20000000
-      integration = 20000000
-      preprod     = 20000000
-      production  = 20000000
-    }
+  kafka_fetch_max_bytes = {
+    development = 20000000
+    qa          = 20000000
+    integration = 20000000
+    preprod     = 20000000
+    production  = 20000000
+  }
 
-    kafka_max_partition_fetch_bytes = {
-      development = 20000000
-      qa          = 20000000
-      integration = 20000000
-      preprod     = 20000000
-      production  = 20000000
-    }
+  kafka_max_partition_fetch_bytes = {
+    development = 20000000
+    qa          = 20000000
+    integration = 20000000
+    preprod     = 20000000
+    production  = 20000000
+  }
 
-    kafka_max_poll_interval_ms = {
-      development = 600000
-      qa          = 600000
-      integration = 600000
-      preprod     = 600000
-      production  = 1800000
-    }
+  kafka_max_poll_interval_ms = {
+    development = 600000
+    qa          = 600000
+    integration = 600000
+    preprod     = 600000
+    production  = 1800000
+  }
 
-    kafka_max_poll_records = {
-      development = 25
-      qa          = 50
-      integration = 50
-      preprod     = 25
-      production  = 5000
-    }
+  kafka_max_poll_records = {
+    development = 25
+    qa          = 50
+    integration = 50
+    preprod     = 25
+    production  = 5000
+  }
 
-    kafka_poll_duration_seconds = {
-      development = 10
-      qa          = 10
-      integration = 60
-      preprod     = 60
-      production  = 120
-    }
+  kafka_poll_duration_seconds = {
+    development = 10
+    qa          = 10
+    integration = 60
+    preprod     = 60
+    production  = 120
+  }
 
-    kafka_topic_regex = {
-      //match any "db.*" collections i.e. db.aa.bb, with only two literal dots allowed
-      //DW-4748 & DW-4827 - Allow extra dot in last matcher group for db.crypto.encryptedData.unencrypted
-      development = "^(db[.]{1}[-\\w]+[.]{1}[-.\\w]+)$"
-      qa          = "^(db[.]{1}[-\\w]+[.]{1}[-.\\w]+)$"
-      integration = "^(db[.]{1}[-\\w]+[.]{1}[-.\\w]+)$"
-      preprod     = "^(db[.]{1}[-\\w]+[.]{1}[-.\\w]+)$"
-      production  = "^(db[.]{1}[-\\w]+[.]{1}[-.\\w]+)$"
-    }
+  kafka_topic_regex = {
+    //match any "db.*" collections i.e. db.aa.bb, with only two literal dots allowed
+    //DW-4748 & DW-4827 - Allow extra dot in last matcher group for db.crypto.encryptedData.unencrypted
+    development = "^(db[.]{1}[-\\w]+[.]{1}[-.\\w]+)$"
+    qa          = "^(db[.]{1}[-\\w]+[.]{1}[-.\\w]+)$"
+    integration = "^(db[.]{1}[-\\w]+[.]{1}[-.\\w]+)$"
+    preprod     = "^(db[.]{1}[-\\w]+[.]{1}[-.\\w]+)$"
+    production  = "^(db[.]{1}[-\\w]+[.]{1}[-.\\w]+)$"
   }
 }
