@@ -1,0 +1,152 @@
+locals {
+
+  k2hb_data_source_is_ucfs     = data.terraform_remote_state.ingest.outputs.locals.k2hb_data_source_is_ucfs
+  stub_bootstrap_servers       = data.terraform_remote_state.ingest.outputs.locals.stub_bootstrap_servers
+  stub_kafka_broker_port_https = data.terraform_remote_state.ingest.outputs.locals.stub_kafka_broker_port_https
+  ucfs_ha_broker_prefix        = data.terraform_remote_state.ingest.outputs.locals.ucfs_ha_broker_prefix
+  ucfs_london_domains          = data.terraform_remote_state.ingest.outputs.locals.ucfs_london_domains
+  uc_kafka_broker_port_https   = data.terraform_remote_state.ingest.outputs.locals.uc_kafka_broker_port_https
+
+  ucfs_london_current_domain = local.ucfs_london_domains[local.environment]
+
+  ucfs_london_ha_broker_list = [
+    "${local.ucfs_ha_broker_prefix}00.${local.ucfs_london_current_domain}",
+    "${local.ucfs_ha_broker_prefix}01.${local.ucfs_london_current_domain}",
+    "${local.ucfs_ha_broker_prefix}02.${local.ucfs_london_current_domain}"
+  ]
+
+  ucfs_london_bootstrap_servers = {
+    development = ["n/a"]                          // stubbed only
+    qa          = ["n/a"]                          // stubbed only
+    integration = local.ucfs_london_ha_broker_list //this exists on UC's end, but we do not use it as the env is stubbed as at Oct 2020
+    preprod     = local.ucfs_london_ha_broker_list
+    production  = local.ucfs_london_ha_broker_list
+  }
+
+  kafka_london_bootstrap_servers = {
+    development = local.stub_bootstrap_servers[local.environment] // stubbed
+    qa          = local.stub_bootstrap_servers[local.environment] // stubbed
+    integration = local.k2hb_data_source_is_ucfs[local.environment] ? local.ucfs_london_bootstrap_servers[local.environment] : local.stub_bootstrap_servers[local.environment]
+    preprod     = local.ucfs_london_bootstrap_servers[local.environment] // now on UCFS Staging HA
+    production  = local.ucfs_london_bootstrap_servers[local.environment] // now on UCFS Production HA
+  }
+
+  kafka_broker_port = {
+    development = local.stub_kafka_broker_port_https
+    qa          = local.stub_kafka_broker_port_https
+    integration = local.k2hb_data_source_is_ucfs[local.environment] ? local.uc_kafka_broker_port_https : local.stub_kafka_broker_port_https
+    preprod     = local.uc_kafka_broker_port_https
+    production  = local.uc_kafka_broker_port_https
+  }
+
+  claimant_api_kafka_consumer_task_configs {
+    log_level = {
+      development = "DEBUG"
+      qa          = "INFO"
+      integration = "INFO"
+      preprod     = "INFO"
+      production  = "INFO"
+    }
+
+    kafka_bootstrap_servers = join(
+        ",",
+          formatlist(
+          "%s:%s",
+          local.kafka_london_bootstrap_servers[local.environment],
+          local.kafka_broker_port[local.environment],
+        ),
+      )
+
+    kafka_consumer_group = "dataworks-ucfs-kafka-to-hbase-ingest-${local.environment}"
+
+    kafka_fetch_max_bytes = {
+      development = 20000000
+      qa          = 20000000
+      integration = 20000000
+      preprod     = 20000000
+      production  = 20000000
+    }
+
+    kafka_key_password = {
+      development = "NOT_SET"
+      qa          = "NOT_SET"
+      integration = "NOT_SET"
+      preprod     = "NOT_SET"
+      production  = "NOT_SET"
+    }
+
+    kafka_keystore = {
+      development = "NOT_SET"
+      qa          = "NOT_SET"
+      integration = "NOT_SET"
+      preprod     = "NOT_SET"
+      production  = "NOT_SET"
+    }
+
+    kafka_keystore_password = {
+      development = "NOT_SET"
+      qa          = "NOT_SET"
+      integration = "NOT_SET"
+      preprod     = "NOT_SET"
+      production  = "NOT_SET"
+    }
+
+    kafka_max_partition_fetch_bytes = {
+      development = 20000000
+      qa          = 20000000
+      integration = 20000000
+      preprod     = 20000000
+      production  = 20000000
+    }
+
+    kafka_max_poll_interval_ms = {
+      development = 600000
+      qa          = 600000
+      integration = 600000
+      preprod     = 600000
+      production  = 1800000
+    }
+
+    kafka_max_poll_records = {
+      development = 25
+      qa          = 50
+      integration = 50
+      preprod     = 25
+      production  = 5000
+    }
+
+    kafka_topic_regex = {
+      //match any "db.*" collections i.e. db.aa.bb, with only two literal dots allowed
+      //DW-4748 & DW-4827 - Allow extra dot in last matcher group for db.crypto.encryptedData.unencrypted
+      development = "^(db[.]{1}[-\\w]+[.]{1}[-.\\w]+)$"
+      qa          = "^(db[.]{1}[-\\w]+[.]{1}[-.\\w]+)$"
+      integration = "^(db[.]{1}[-\\w]+[.]{1}[-.\\w]+)$"
+      preprod     = "^(db[.]{1}[-\\w]+[.]{1}[-.\\w]+)$"
+      production  = "^(db[.]{1}[-\\w]+[.]{1}[-.\\w]+)$"
+    }
+
+    kafka_truststore = {
+      development = "NOT_SET"
+      qa          = "NOT_SET"
+      integration = "NOT_SET"
+      preprod     = "NOT_SET"
+      production  = "NOT_SET"
+    }
+
+    kafka_truststore_password = {
+      development = "NOT_SET"
+      qa          = "NOT_SET"
+      integration = "NOT_SET"
+      preprod     = "NOT_SET"
+      production  = "NOT_SET"
+    }
+
+    kafka_use_ssl = {
+      development = "NOT_SET"
+      qa          = "NOT_SET"
+      integration = "NOT_SET"
+      preprod     = "NOT_SET"
+      production  = "NOT_SET"
+    }
+  }
+}

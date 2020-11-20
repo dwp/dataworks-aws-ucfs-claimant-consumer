@@ -40,3 +40,15 @@ variable "ucfs_claimant_kafka_consumer_version" {
   type        = string
   default     = ":latest"
 }
+
+variable "retriever_acm_cert_arn" {
+  description = "Arn for retriever ACM cert"
+  type        = string
+  default     = "NOT_SET"
+}
+
+variable "claimant_api_kafka_consumer_container_version" {
+  description = "Claimant API Kafka consumer container version SHA"
+  type        = string
+  default     = "NOT_SET"
+}
