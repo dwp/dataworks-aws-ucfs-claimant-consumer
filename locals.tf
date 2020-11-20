@@ -115,6 +115,14 @@ locals {
       production  = 5000
     }
 
+    kafka_poll_duration_seconds = {
+      development = 10
+      qa          = 10
+      integration = 60
+      preprod     = 60
+      production  = 120
+    }
+
     kafka_topic_regex = {
       //match any "db.*" collections i.e. db.aa.bb, with only two literal dots allowed
       //DW-4748 & DW-4827 - Allow extra dot in last matcher group for db.crypto.encryptedData.unencrypted

@@ -27,7 +27,6 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
     }
   )
 
-  //  TODO: Fill container env var values
   container_definitions = <<DEFINITION
 [
   {
@@ -54,67 +53,67 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
       },
       {
         "name": "LOG_LEVEL",
-        "value": "INFO"
+        "value": "${local.claimant_api_kafka_consumer_task_configs.log_level[local.environment]}"
       },
       {
         "name": "RETRIEVER_ACM_CERT_ARN",
-        "value": "${aws_service_not_defined.needs_replacing}"
+        "value": "${var.retriever_acm_cert_arn}"
       },
       {
         "name": "KAFKA_BOOTSTRAP_SERVERS",
-        "value": "${aws_service_not_defined.needs_replacing}"
+        "value": "${local.claimant_api_kafka_consumer_task_configs.kafka_bootstrap_servers}"
       },
       {
         "name": "KAFKA_CONSUMER_GROUP",
-        "value": "${aws_service_not_defined.needs_replacing}"
+        "value": "${local.claimant_api_kafka_consumer_task_configs.kafka_consumer_group}"
       },
       {
         "name": "KAFKA_FETCH_MAX_BYTES",
-        "value": "${aws_service_not_defined.needs_replacing}"
+        "value": "${local.claimant_api_kafka_consumer_task_configs.kafka_fetch_max_bytes[local.environment]}"
       },
       {
         "name": "KAFKA_KEY_PASSWORD",
-        "value": "${aws_service_not_defined.needs_replacing}"
+        "value": "${local.claimant_api_kafka_consumer_task_configs.kafka_key_password[local.environment]}"
       },
       {
         "name": "KAFKA_KEYSTORE",
-        "value": "${aws_service_not_defined.needs_replacing}"
+        "value": "${local.claimant_api_kafka_consumer_task_configs.kafka_keystore[local.environment]}"
       },
       {
         "name": "KAFKA_KEYSTORE_PASSWORD",
-        "value": "${aws_service_not_defined.needs_replacing}"
+        "value": "${local.claimant_api_kafka_consumer_task_configs.kafka_keystore_password[local.environment]}"
       },
       {
         "name": "KAFKA_MAX_PARTITION_FETCH_BYTES",
-        "value": "${aws_service_not_defined.needs_replacing}"
+        "value": "${local.claimant_api_kafka_consumer_task_configs.kafka_max_partition_fetch_bytes[local.environment]}"
       },
       {
         "name": "KAFKA_MAX_POLL_INTERVAL_MS",
-        "value": "${aws_service_not_defined.needs_replacing}"
+        "value": "${local.claimant_api_kafka_consumer_task_configs.kafka_max_poll_interval_ms[local.environment]}"
       },
       {
         "name": "KAFKA_MAX_POLL_RECORDS",
-        "value": "${aws_service_not_defined.needs_replacing}"
+        "value": "${local.claimant_api_kafka_consumer_task_configs.kafka_max_poll_records[local.environment]}"
       },
       {
         "name": "KAFKA_POLL_DURATION_SECONDS",
-        "value": "${aws_service_not_defined.needs_replacing}"
+        "value": "${local.claimant_api_kafka_consumer_task_configs.kafka_poll_duration_seconds[local.environment]}"
       },
       {
         "name": "KAFKA_TOPIC_REGEX",
-        "value": "${aws_service_not_defined.needs_replacing}"
+        "value": "${local.claimant_api_kafka_consumer_task_configs.kafka_topic_regex[local.environment]}"
       },
       {
         "name": "KAFKA_TRUSTSTORE",
-        "value": "${aws_service_not_defined.needs_replacing}"
+        "value": "${local.claimant_api_kafka_consumer_task_configs.kafka_truststore[local.environment]}"
       },
       {
         "name": "KAFKA_TRUSTSTORE_PASSWORD",
-        "value": "${aws_service_not_defined.needs_replacing}"
+        "value": "${local.claimant_api_kafka_consumer_task_configs.kafka_truststore_password[local.environment]}"
       },
       {
         "name": "KAFKA_USE_SSL",
-        "value": "${aws_service_not_defined.needs_replacing}"
+        "value": "${local.claimant_api_kafka_consumer_task_configs.kafka_use_ssl[local.environment]}"
       }
     ]
   }
