@@ -72,18 +72,6 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
         "value": "${local.claimant_api_kafka_consumer_task_configs.kafka_fetch_max_bytes[local.environment]}"
       },
       {
-        "name": "KAFKA_KEY_PASSWORD",
-        "value": "${local.claimant_api_kafka_consumer_task_configs.kafka_key_password[local.environment]}"
-      },
-      {
-        "name": "KAFKA_KEYSTORE",
-        "value": "${local.claimant_api_kafka_consumer_task_configs.kafka_keystore[local.environment]}"
-      },
-      {
-        "name": "KAFKA_KEYSTORE_PASSWORD",
-        "value": "${local.claimant_api_kafka_consumer_task_configs.kafka_keystore_password[local.environment]}"
-      },
-      {
         "name": "KAFKA_MAX_PARTITION_FETCH_BYTES",
         "value": "${local.claimant_api_kafka_consumer_task_configs.kafka_max_partition_fetch_bytes[local.environment]}"
       },
@@ -103,18 +91,6 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
         "name": "KAFKA_TOPIC_REGEX",
         "value": "${local.claimant_api_kafka_consumer_task_configs.kafka_topic_regex[local.environment]}"
       },
-      {
-        "name": "KAFKA_TRUSTSTORE",
-        "value": "${local.claimant_api_kafka_consumer_task_configs.kafka_truststore[local.environment]}"
-      },
-      {
-        "name": "KAFKA_TRUSTSTORE_PASSWORD",
-        "value": "${local.claimant_api_kafka_consumer_task_configs.kafka_truststore_password[local.environment]}"
-      },
-      {
-        "name": "KAFKA_USE_SSL",
-        "value": "${local.claimant_api_kafka_consumer_task_configs.kafka_use_ssl[local.environment]}"
-      }
     ]
   }
 ]

@@ -67,30 +67,6 @@ locals {
       production  = 20000000
     }
 
-    kafka_key_password = {
-      development = "NOT_SET"
-      qa          = "NOT_SET"
-      integration = "NOT_SET"
-      preprod     = "NOT_SET"
-      production  = "NOT_SET"
-    }
-
-    kafka_keystore = {
-      development = "NOT_SET"
-      qa          = "NOT_SET"
-      integration = "NOT_SET"
-      preprod     = "NOT_SET"
-      production  = "NOT_SET"
-    }
-
-    kafka_keystore_password = {
-      development = "NOT_SET"
-      qa          = "NOT_SET"
-      integration = "NOT_SET"
-      preprod     = "NOT_SET"
-      production  = "NOT_SET"
-    }
-
     kafka_max_partition_fetch_bytes = {
       development = 20000000
       qa          = 20000000
@@ -131,30 +107,6 @@ locals {
       integration = "^(db[.]{1}[-\\w]+[.]{1}[-.\\w]+)$"
       preprod     = "^(db[.]{1}[-\\w]+[.]{1}[-.\\w]+)$"
       production  = "^(db[.]{1}[-\\w]+[.]{1}[-.\\w]+)$"
-    }
-
-    kafka_truststore = {
-      development = "NOT_SET"
-      qa          = "NOT_SET"
-      integration = "NOT_SET"
-      preprod     = "NOT_SET"
-      production  = "NOT_SET"
-    }
-
-    kafka_truststore_password = {
-      development = "NOT_SET"
-      qa          = "NOT_SET"
-      integration = "NOT_SET"
-      preprod     = "NOT_SET"
-      production  = "NOT_SET"
-    }
-
-    kafka_use_ssl = {
-      development = "NOT_SET"
-      qa          = "NOT_SET"
-      integration = "NOT_SET"
-      preprod     = "NOT_SET"
-      production  = "NOT_SET"
     }
   }
 }
