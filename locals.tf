@@ -49,13 +49,13 @@ locals {
     }
 
     kafka_bootstrap_servers = join(
-        ",",
-          formatlist(
-          "%s:%s",
-          local.kafka_london_bootstrap_servers[local.environment],
-          local.kafka_broker_port[local.environment],
-        ),
-      )
+      ",",
+      formatlist(
+        "%s:%s",
+        local.kafka_london_bootstrap_servers[local.environment],
+        local.kafka_broker_port[local.environment],
+      ),
+    )
 
     kafka_consumer_group = "dataworks-ucfs-kafka-to-hbase-ingest-${local.environment}"
 

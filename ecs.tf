@@ -27,7 +27,7 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
     }
   )
 
-//  TODO: Fill container env var values
+  //  TODO: Fill container env var values
   container_definitions = <<DEFINITION
 [
   {
