@@ -1,5 +1,6 @@
 locals {
 
+  certificate_auth_public_cert_bucket = data.terraform_remote_state.certificate_authority.outputs.public_cert_bucket
   k2hb_data_source_is_ucfs     = data.terraform_remote_state.ingest.outputs.locals.k2hb_data_source_is_ucfs
   stub_bootstrap_servers       = data.terraform_remote_state.ingest.outputs.locals.stub_bootstrap_servers
   stub_kafka_broker_port_https = data.terraform_remote_state.ingest.outputs.locals.stub_kafka_broker_port_https
@@ -37,6 +38,22 @@ locals {
     integration = local.k2hb_data_source_is_ucfs[local.environment] ? local.uc_kafka_broker_port_https : local.stub_kafka_broker_port_https
     preprod     = local.uc_kafka_broker_port_https
     production  = local.uc_kafka_broker_port_https
+  }
+
+  kafka_consumer_truststore_aliases = {
+    development = "ucfs_ca"
+    qa          = "ucfs_ca"
+    integration = "ucfs_ca"
+    preprod     = "ucfs_ca"
+    production  = "ucfs_ca,ucfs_ca_old"
+  }
+
+  kafka_consumer_truststore_certs = {
+    development = "s3://${local.certificate_auth_public_cert_bucket.id}/ca_certificates/ucfs/root_ca.pem"
+    qa          = "s3://${local.certificate_auth_public_cert_bucket.id}/ca_certificates/ucfs/root_ca.pem"
+    integration = "s3://${local.certificate_auth_public_cert_bucket.id}/ca_certificates/ucfs/root_ca.pem"
+    preprod     = "s3://${local.certificate_auth_public_cert_bucket.id}/ca_certificates/ucfs/root_ca.pem"
+    production  = "s3://${local.certificate_auth_public_cert_bucket.id}/ca_certificates/ucfs/root_ca.pem,s3://${local.certificate_auth_public_cert_bucket.id}/ca_certificates/ucfs/root_ca_old.pem"
   }
 
   claimant_api_kafka_consumer_task_configs {

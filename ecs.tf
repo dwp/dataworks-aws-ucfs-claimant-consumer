@@ -57,7 +57,7 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
       },
       {
         "name": "RETRIEVER_ACM_CERT_ARN",
-        "value": "${var.retriever_acm_cert_arn}"
+        "value": "${aws_acm_certificate.ucfs_claimant_kafka_consumer.arn}"
       },
       {
         "name": "KAFKA_BOOTSTRAP_SERVERS",
@@ -90,6 +90,14 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
       {
         "name": "KAFKA_TOPIC_REGEX",
         "value": "${local.claimant_api_kafka_consumer_task_configs.kafka_topic_regex[local.environment]}"
+      },
+      {
+        "name": "KAFKA_CONSUMER_TRUSTSTORE_CERTS",
+        "value": "${local.kafka_consumer_truststore_certs[local.environment]}"
+      },
+      {
+        "name": "KAFKA_CONSUMER_TRUSTSTORE_ALIASES",
+        "value": "${local.kafka_consumer_truststore_aliases[local.environment]}"
       },
     ]
   }
