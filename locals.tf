@@ -1,12 +1,12 @@
 locals {
 
   certificate_auth_public_cert_bucket = data.terraform_remote_state.certificate_authority.outputs.public_cert_bucket
-  k2hb_data_source_is_ucfs            = data.terraform_remote_state.ingest.outputs.locals.k2hb_data_source_is_ucfs
-  stub_bootstrap_servers              = data.terraform_remote_state.ingest.outputs.locals.stub_bootstrap_servers
-  stub_kafka_broker_port_https        = data.terraform_remote_state.ingest.outputs.locals.stub_kafka_broker_port_https
-  ucfs_ha_broker_prefix               = data.terraform_remote_state.ingest.outputs.locals.ucfs_ha_broker_prefix
-  ucfs_london_domains                 = data.terraform_remote_state.ingest.outputs.locals.ucfs_london_domains
-  uc_kafka_broker_port_https          = data.terraform_remote_state.ingest.outputs.locals.uc_kafka_broker_port_https
+  k2hb_data_source_is_ucfs            = data.terraform_remote_state.ingestion.outputs.locals.k2hb_data_source_is_ucfs
+  stub_bootstrap_servers              = data.terraform_remote_state.ingestion.outputs.locals.stub_bootstrap_servers
+  stub_kafka_broker_port_https        = data.terraform_remote_state.ingestion.outputs.locals.stub_kafka_broker_port_https
+  ucfs_ha_broker_prefix               = data.terraform_remote_state.ingestion.outputs.locals.ucfs_ha_broker_prefix
+  ucfs_london_domains                 = data.terraform_remote_state.ingestion.outputs.locals.ucfs_london_domains
+  uc_kafka_broker_port_https          = data.terraform_remote_state.ingestion.outputs.locals.uc_kafka_broker_port_https
 
   ucfs_london_current_domain = local.ucfs_london_domains[local.environment]
 
