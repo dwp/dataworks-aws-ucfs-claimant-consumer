@@ -98,6 +98,14 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
       {
         "name": "KAFKA_CONSUMER_TRUSTSTORE_ALIASES",
         "value": "${local.kafka_consumer_truststore_aliases[local.environment]}"
+      },
+      {
+        "name": "KAFKA_CERT_MODE",
+        "value": "${local.kafka_cert_mode[local.environment]}"
+      },
+      {
+        "name": "AWS_REGION",
+        "value": "${var.region}"
       }
     ]
   }
@@ -113,7 +121,7 @@ resource "aws_ecs_service" "claimant_api_kafka_consumer" {
   launch_type     = "EC2"
 
   network_configuration {
-    security_groups = [data.terraform_remote_state.dataworks_aws_ingestion_ecs_cluster.outputs.ingestion_ecs_cluster.id]
+    security_groups = [data.terraform_remote_state.dataworks_aws_ingestion_ecs_cluster.outputs.ingestion_ecs_cluster_security_group.id]
     subnets         = data.terraform_remote_state.ingestion.outputs.ingestion_subnets.id
   }
 }

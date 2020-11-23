@@ -1,5 +1,4 @@
 locals {
-
   certificate_auth_public_cert_bucket = data.terraform_remote_state.certificate_authority.outputs.public_cert_bucket
   k2hb_data_source_is_ucfs            = data.terraform_remote_state.ingestion.outputs.locals.k2hb_data_source_is_ucfs
   stub_bootstrap_servers              = data.terraform_remote_state.ingestion.outputs.locals.stub_bootstrap_servers
@@ -118,10 +117,18 @@ locals {
   kafka_topic_regex = {
     //match any "db.*" collections i.e. db.aa.bb, with only two literal dots allowed
     //DW-4748 & DW-4827 - Allow extra dot in last matcher group for db.crypto.encryptedData.unencrypted
-    development = "^(db[.]{1}[-\\w]+[.]{1}[-.\\w]+)$"
-    qa          = "^(db[.]{1}[-\\w]+[.]{1}[-.\\w]+)$"
-    integration = "^(db[.]{1}[-\\w]+[.]{1}[-.\\w]+)$"
-    preprod     = "^(db[.]{1}[-\\w]+[.]{1}[-.\\w]+)$"
-    production  = "^(db[.]{1}[-\\w]+[.]{1}[-.\\w]+)$"
+    development = "^(db[.]{1}[-\\\\w]+[.]{1}[-.\\\\w]+)$"
+    qa          = "^(db[.]{1}[-\\\\w]+[.]{1}[-.\\\\w]+)$"
+    integration = "^(db[.]{1}[-\\\\w]+[.]{1}[-.\\\\w]+)$"
+    preprod     = "^(db[.]{1}[-\\\\w]+[.]{1}[-.\\\\w]+)$"
+    production  = "^(db[.]{1}[-\\\\w]+[.]{1}[-.\\\\w]+)$"
+  }
+
+  kafka_cert_mode = {
+    development = "RETRIEVE"
+    qa          = "RETRIEVE"
+    integration = "RETRIEVE"
+    preprod     = "RETRIEVE"
+    production  = "RETRIEVE"
   }
 }
