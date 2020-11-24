@@ -121,7 +121,7 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
       },
       {
         "name": "INTERNET_PROXY",
-        "value": "${local.ingest_internet_proxy}"
+        "value": "${local.internet_proxy}"
       },
       {
         "name": "NON_PROXIED_ENDPOINTS",
