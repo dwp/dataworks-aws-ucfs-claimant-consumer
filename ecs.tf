@@ -60,6 +60,10 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
         "value": "${aws_acm_certificate.ucfs_claimant_kafka_consumer.arn}"
       },
       {
+        "name": "RETRIEVER_PRIVATE_KEY_ALIAS",
+        "value": "${var.friendly_name}"
+      },
+      {
         "name": "KAFKA_BOOTSTRAP_SERVERS",
         "value": "${local.kafka_bootstrap_servers}"
       },
@@ -92,20 +96,36 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
         "value": "${local.kafka_topic_regex[local.environment]}"
       },
       {
-        "name": "KAFKA_CONSUMER_TRUSTSTORE_CERTS",
-        "value": "${local.kafka_consumer_truststore_certs[local.environment]}"
+        "name": "KAFKA_INSECURE",
+        "value": "false"
+      },
+      {
+        "name": "KAFKA_CERT_MODE",
+        "value": "RETRIEVE"
       },
       {
         "name": "KAFKA_CONSUMER_TRUSTSTORE_ALIASES",
         "value": "${local.kafka_consumer_truststore_aliases[local.environment]}"
       },
       {
-        "name": "KAFKA_CERT_MODE",
-        "value": "${local.kafka_cert_mode[local.environment]}"
+        "name": "KAFKA_CONSUMER_TRUSTSTORE_CERTS",
+        "value": "${local.kafka_consumer_truststore_certs[local.environment]}"
       },
       {
         "name": "AWS_REGION",
         "value": "${var.region}"
+      },
+      {
+        "name": "AWS_DEFAULT_REGION",
+        "value": "${var.region}"
+      },
+      {
+        "name": "INTERNET_PROXY",
+        "value": "${local.ingest_internet_proxy}"
+      },
+      {
+        "name": "NON_PROXIED_ENDPOINTS",
+        "value": "${local.non_proxied_endpoints}"
       }
     ]
   }

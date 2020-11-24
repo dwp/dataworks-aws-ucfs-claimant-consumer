@@ -7,6 +7,10 @@ locals {
   ucfs_london_domains                 = data.terraform_remote_state.ingestion.outputs.locals.ucfs_london_domains
   uc_kafka_broker_port_https          = data.terraform_remote_state.ingestion.outputs.locals.uc_kafka_broker_port_https
 
+  ingest_internet_proxy               = data.terraform_remote_state.ingestion.outputs.internet_proxy
+  ingest_no_proxy_list                = data.terraform_remote_state.ingestion.outputs.vpc.vpc.no_proxy_list
+  non_proxied_endpoints               = join(",", local.ingest_no_proxy_list)
+
   ucfs_london_current_domain = local.ucfs_london_domains[local.environment]
 
   ucfs_london_ha_broker_list = [
@@ -122,13 +126,5 @@ locals {
     integration = "^(db[.]{1}[-\\\\w]+[.]{1}[-.\\\\w]+)$"
     preprod     = "^(db[.]{1}[-\\\\w]+[.]{1}[-.\\\\w]+)$"
     production  = "^(db[.]{1}[-\\\\w]+[.]{1}[-.\\\\w]+)$"
-  }
-
-  kafka_cert_mode = {
-    development = "RETRIEVE"
-    qa          = "RETRIEVE"
-    integration = "RETRIEVE"
-    preprod     = "RETRIEVE"
-    production  = "RETRIEVE"
   }
 }
