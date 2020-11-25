@@ -48,22 +48,17 @@ terraform-workspace-new: ## Creates new Terraform workspace with Concourse remot
 	done
 	rm jeff.tf
 
-.PHONY: concourse-login
 concourse-login: ## Login to concourse using Fly
 	fly -t aws-concourse login -c https://ci.dataworks.dwp.gov.uk/ -n ucfs-claimant-consumer
 
-.PHONY: utility-login
 utility-login: ## Login to utility team using Fly
 	fly -t utility login -c https://ci.dataworks.dwp.gov.uk/ -n utility
 
-.PHONY: update-pipeline
 update-pipeline: ## Update the main pipeline
 	aviator
 
-.PHONY: pause-pipeline
 pause-pipeline: ## Pause the main pipeline
 	fly --target aws-concourse pause-pipeline --pipeline ucfs-claimant-consumer
 
-.PHONY: unpause-pipeline
 unpause-pipeline: ## Unpause the main pipeline
 	fly --target aws-concourse unpause-pipeline --pipeline ucfs-claimant-consumer
