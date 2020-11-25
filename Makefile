@@ -26,19 +26,15 @@ git-hooks: ## Set up hooks in .githooks
 	git config core.hooksPath .githooks \
 
 
-.PHONY: terraform-init
 terraform-init: ## Run `terraform init` from repo root
 	terraform init
 
-.PHONY: terraform-plan
 terraform-plan: ## Run `terraform plan` from repo root
 	terraform plan
 
-.PHONY: terraform-apply
 terraform-apply: ## Run `terraform apply` from repo root
 	terraform apply
 
-.PHONY: terraform-workspace-new
 terraform-workspace-new: ## Creates new Terraform workspace with Concourse remote execution. Run `terraform-workspace-new workspace=<workspace_name>`
 	declare -a workspace=( qa integration preprod production ) \
 	make bootstrap ; \
