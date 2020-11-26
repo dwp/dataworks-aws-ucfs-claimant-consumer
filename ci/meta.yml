@@ -30,7 +30,9 @@ meta:
             - -exc
             - |
               python bootstrap_terraform.py
+              sed -i '/^assume_role/ d' terraform.tfvars
               cp terraform.tf ../terraform-bootstrap
+              cp terraform.tfvars ../terraform-bootstrap
           dir: dataworks-aws-ucfs-claimant-consumer
         inputs:
           - name: dataworks-aws-ucfs-claimant-consumer
