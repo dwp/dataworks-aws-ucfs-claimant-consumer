@@ -51,6 +51,7 @@ meta:
             - -exc
             - |
               cp ../terraform-bootstrap/terraform.tf .
+              cp ../terraform-bootstrap/terraform.tfvars .
               terraform workspace show
               terraform init
               terraform plan -out terraform.plan
@@ -70,6 +71,7 @@ meta:
             - -exc
             - |
               cp ../terraform-bootstrap/terraform.tf .
+              cp ../terraform-bootstrap/terraform.tfvars .
               terraform workspace show
               terraform init
               terraform plan $DETAILED_EXITCODE
