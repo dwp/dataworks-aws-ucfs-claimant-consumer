@@ -1,4 +1,4 @@
-ucfs_claimant_kafka_consumer_version: "@sha256:85a1dcd7b011f8c86548b10a7f02215b703a31a81a304c62cc0015968d4eb8fe"
+ucfs_claimant_kafka_consumer_version: "@sha256:27071b6e3a9c6edeb2b0b6d57583ae2394b571258a45957cc6ec89a01fd42f84"
 task_config: {
   cpu    = 256
   memory = 2048
