@@ -77,7 +77,7 @@ locals {
     ),
   )
 
-  kafka_consumer_group = "dataworks-ucfs-kafka-to-hbase-ingest-${local.environment}"
+  kafka_consumer_group = "dataworks-ucfs-claimant-ingest-${local.environment}"
 
   kafka_fetch_max_bytes = {
     development = 20000000
