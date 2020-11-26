@@ -49,7 +49,7 @@ locals {
     qa          = "ucfs_ca"
     integration = "ucfs_ca"
     preprod     = "ucfs_ca"
-    production  = "ucfs_ca,ucfs_ca_old"
+    production  = "ucfs_ca"
   }
 
   kafka_consumer_truststore_certs = {

@@ -1,5 +1,5 @@
 resource "aws_cloudwatch_log_group" "claimant_api_kafka_consumer" {
-  name              = "/aws/ecs/${data.terraform_remote_state.dataworks_aws_ingestion_ecs_cluster.outputs.ingestion_ecs_cluster.name}/${var.friendly_name}" //TODO: get cluster name from remote state and rename it to `ingest`
+  name              = "/aws/ecs/${data.terraform_remote_state.dataworks_aws_ingestion_ecs_cluster.outputs.ingestion_ecs_cluster.name}/${var.friendly_name}"
   retention_in_days = "180"
   tags = merge(
     local.common_tags,
