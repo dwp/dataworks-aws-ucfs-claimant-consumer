@@ -120,8 +120,6 @@ locals {
   }
 
   kafka_topic_regex = {
-    //match any "db.*" collections i.e. db.aa.bb, with only two literal dots allowed
-    //DW-4748 & DW-4827 - Allow extra dot in last matcher group for db.crypto.encryptedData.unencrypted
     development = "^(db[.])core[.](claimant|contract|statement)$"
     qa          = "^(db[.])core[.](claimant|contract|statement)$"
     integration = "^(db[.])core[.](claimant|contract|statement)$"

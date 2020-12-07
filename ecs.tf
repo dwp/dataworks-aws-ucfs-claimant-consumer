@@ -141,7 +141,7 @@ resource "aws_ecs_service" "claimant_api_kafka_consumer" {
   launch_type     = "EC2"
 
   network_configuration {
-    security_groups = [data.terraform_remote_state.dataworks_aws_ingestion_ecs_cluster.outputs.ingestion_ecs_cluster_security_group.id]
+    security_groups = [data.terraform_remote_state.dataworks_aws_ingestion_ecs_cluster.outputs.ingestion_ecs_cluster_security_group.id, aws_security_group.claimant_api_kafka_consumer.id]
     subnets         = data.terraform_remote_state.ingestion.outputs.ingestion_subnets.id
   }
 }
