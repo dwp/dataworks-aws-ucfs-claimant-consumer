@@ -1,31 +1,13 @@
 locals {
   security_group_rules = [
     {
-      name : "STUB Kafka brokers"
-      port : local.kafka_broker_port[local.environment]
-      protocol : "tcp"
-      destination : local.stub_ucfs_subnets.cidr_block
-    },
-    {
       name : "UCFS Kafka brokers"
       port : local.kafka_broker_port[local.environment]
       protocol : "tcp"
-      destination : local.ucfs_broker_cidr_blocks[local.environment]
+      destination : concat(local.ucfs_london_broker_cidr_blocks[local.environment], local.stub_ucfs_subnets.cidr_block)
     },
     {
-      name : "London UCFS Kafka brokers"
-      port : local.kafka_broker_port[local.environment]
-      protocol : "tcp"
-      destination : local.ucfs_london_broker_cidr_blocks[local.environment]
-    },
-    {
-      name : "UCFS DNS Name servers in Ireland"
-      port : 53
-      protocol : "all"
-      destination : local.ucfs_nameservers_cidr_blocks[local.environment]
-    },
-    {
-      name : "UCFS DNS Name servers in London"
+      name : "UCFS DNS Name servers"
       port : 53
       protocol : "all"
       destination : local.ucfs_london_nameservers_cidr_blocks[local.environment]
