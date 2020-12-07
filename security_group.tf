@@ -10,7 +10,7 @@ locals {
       name : "UCFS DNS Name servers"
       port : 53
       protocol : "all"
-      destination : local.ucfs_london_nameservers_cidr_blocks[local.environment]
+      destination : distinct(local.ucfs_london_nameservers_cidr_blocks[local.environment]) # Using distinct as dev & QA have duplicate values
     },
   ]
 }
