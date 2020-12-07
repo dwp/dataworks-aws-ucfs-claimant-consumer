@@ -1,11 +1,22 @@
 locals {
   certificate_auth_public_cert_bucket = data.terraform_remote_state.certificate_authority.outputs.public_cert_bucket
   k2hb_data_source_is_ucfs            = data.terraform_remote_state.ingestion.outputs.locals.k2hb_data_source_is_ucfs
-  stub_bootstrap_servers              = data.terraform_remote_state.ingestion.outputs.locals.stub_bootstrap_servers
-  stub_kafka_broker_port_https        = data.terraform_remote_state.ingestion.outputs.locals.stub_kafka_broker_port_https
   ucfs_ha_broker_prefix               = data.terraform_remote_state.ingestion.outputs.locals.ucfs_ha_broker_prefix
   ucfs_london_domains                 = data.terraform_remote_state.ingestion.outputs.locals.ucfs_london_domains
   uc_kafka_broker_port_https          = data.terraform_remote_state.ingestion.outputs.locals.uc_kafka_broker_port_https
+
+  stub_bootstrap_servers       = data.terraform_remote_state.ingestion.outputs.locals.stub_bootstrap_servers
+  stub_ucfs_subnets            = data.terraform_remote_state.ingestion.outputs.stub_ucfs_subnets
+  stub_kafka_broker_port_https = data.terraform_remote_state.ingestion.outputs.locals.stub_kafka_broker_port_https
+
+  ucfs_broker_cidr_blocks             = data.terraform_remote_state.ingestion.outputs.locals.ucfs_broker_cidr_blocks
+  ucfs_london_broker_cidr_blocks      = data.terraform_remote_state.ingestion.outputs.locals.ucfs_london_broker_cidr_blocks
+  ucfs_nameservers_cidr_blocks        = data.terraform_remote_state.ingestion.outputs.locals.ucfs_nameservers_cidr_blocks
+  ucfs_london_nameservers_cidr_blocks = data.terraform_remote_state.ingestion.outputs.locals.ucfs_london_nameservers_cidr_blocks
+
+  kafka_data_source_is_ucfs = data.terraform_remote_state.ingestion.outputs.locals.k2hb_data_source_is_ucfs
+  peer_with_ucfs            = data.terraform_remote_state.ingestion.outputs.locals.peer_with_ucfs
+  peer_with_ucfs_london     = data.terraform_remote_state.ingestion.outputs.locals.peer_with_ucfs_london
 
   ingest_internet_proxy = data.terraform_remote_state.ingestion.outputs.internet_proxy
   ingest_no_proxy_list  = data.terraform_remote_state.ingestion.outputs.vpc.vpc.no_proxy_list
