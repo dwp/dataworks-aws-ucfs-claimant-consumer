@@ -1,4 +1,17 @@
 locals {
+  crypto_workspace = {
+    management-dev = "management-dev"
+    management     = "management"
+  }
+
+  management_account = {
+    development = "management-dev"
+    qa          = "management-dev"
+    integration = "management-dev"
+    preprod     = "management"
+    production  = "management"
+  }
+
   certificate_auth_public_cert_bucket = data.terraform_remote_state.certificate_authority.outputs.public_cert_bucket
   k2hb_data_source_is_ucfs            = data.terraform_remote_state.ingestion.outputs.locals.k2hb_data_source_is_ucfs
 
