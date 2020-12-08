@@ -72,6 +72,10 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
         "value": "${local.kafka_consumer_group}"
       },
       {
+        "name": "KAFKA_DLQ_TOPIC",
+        "value": "${local.dlq_kafka_consumer_topic}"
+      },
+      {
         "name": "KAFKA_FETCH_MAX_BYTES",
         "value": "${local.kafka_fetch_max_bytes[local.environment]}"
       },
@@ -100,6 +104,10 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
         "value": "false"
       },
       {
+        "name": "KAFKA_USE_SSL",
+        "value": "false"
+      },
+      {
         "name": "KAFKA_CERT_MODE",
         "value": "RETRIEVE"
       },
@@ -110,6 +118,10 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
       {
         "name": "KAFKA_CONSUMER_TRUSTSTORE_CERTS",
         "value": "${local.kafka_consumer_truststore_certs[local.environment]}"
+      },
+      {
+        "name": "DKS_URL",
+        "value": "${local.dks_endpoint_url}"
       },
       {
         "name": "AWS_REGION",
@@ -141,7 +153,7 @@ resource "aws_ecs_service" "claimant_api_kafka_consumer" {
   launch_type     = "EC2"
 
   network_configuration {
-    security_groups = [data.terraform_remote_state.dataworks_aws_ingestion_ecs_cluster.outputs.ingestion_ecs_cluster_security_group.id]
+    security_groups = [data.terraform_remote_state.dataworks_aws_ingestion_ecs_cluster.outputs.ingestion_ecs_cluster_security_group.id, aws_security_group.claimant_api_kafka_consumer.id]
     subnets         = data.terraform_remote_state.ingestion.outputs.ingestion_subnets.id
   }
 }

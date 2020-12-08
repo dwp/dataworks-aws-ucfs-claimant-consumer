@@ -1,18 +1,46 @@
 locals {
+  crypto_workspace = {
+    management-dev = "management-dev"
+    management     = "management"
+  }
+
+  management_account = {
+    development = "management-dev"
+    qa          = "management-dev"
+    integration = "management-dev"
+    preprod     = "management"
+    production  = "management"
+  }
+
   certificate_auth_public_cert_bucket = data.terraform_remote_state.certificate_authority.outputs.public_cert_bucket
   k2hb_data_source_is_ucfs            = data.terraform_remote_state.ingestion.outputs.locals.k2hb_data_source_is_ucfs
-  stub_bootstrap_servers              = data.terraform_remote_state.ingestion.outputs.locals.stub_bootstrap_servers
-  stub_kafka_broker_port_https        = data.terraform_remote_state.ingestion.outputs.locals.stub_kafka_broker_port_https
+
+  dks_subnet_cidr          = data.terraform_remote_state.crypto.outputs.dks_subnet.cidr_blocks
+  dks_endpoint_url         = data.terraform_remote_state.crypto.outputs.dks_endpoint[local.environment]
+  dlq_kafka_consumer_topic = data.terraform_remote_state.ingestion.outputs.locals.dlq_kafka_consumer_topic // must match what k2s3 uses
+
+  stub_bootstrap_servers       = data.terraform_remote_state.ingestion.outputs.locals.stub_bootstrap_servers
+  stub_ucfs_subnets            = data.terraform_remote_state.ingestion.outputs.stub_ucfs_subnets
+  stub_kafka_broker_port_https = data.terraform_remote_state.ingestion.outputs.locals.stub_kafka_broker_port_https
+
+  kafka_data_source_is_ucfs = data.terraform_remote_state.ingestion.outputs.locals.k2hb_data_source_is_ucfs
+  peer_with_ucfs            = data.terraform_remote_state.ingestion.outputs.locals.peer_with_ucfs
+  peer_with_ucfs_london     = data.terraform_remote_state.ingestion.outputs.locals.peer_with_ucfs_london
+
   ucfs_ha_broker_prefix               = data.terraform_remote_state.ingestion.outputs.locals.ucfs_ha_broker_prefix
   ucfs_london_domains                 = data.terraform_remote_state.ingestion.outputs.locals.ucfs_london_domains
+  ucfs_london_current_domain          = local.ucfs_london_domains[local.environment]
   uc_kafka_broker_port_https          = data.terraform_remote_state.ingestion.outputs.locals.uc_kafka_broker_port_https
+  ucfs_broker_cidr_blocks             = data.terraform_remote_state.ingestion.outputs.locals.ucfs_broker_cidr_blocks
+  ucfs_london_broker_cidr_blocks      = data.terraform_remote_state.ingestion.outputs.locals.ucfs_london_broker_cidr_blocks
+  ucfs_nameservers_cidr_blocks        = data.terraform_remote_state.ingestion.outputs.locals.ucfs_nameservers_cidr_blocks
+  ucfs_london_nameservers_cidr_blocks = data.terraform_remote_state.ingestion.outputs.locals.ucfs_london_nameservers_cidr_blocks
 
   ingest_internet_proxy = data.terraform_remote_state.ingestion.outputs.internet_proxy
   ingest_no_proxy_list  = data.terraform_remote_state.ingestion.outputs.vpc.vpc.no_proxy_list
   internet_proxy        = local.ingest_internet_proxy.host
   non_proxied_endpoints = join(",", local.ingest_no_proxy_list)
 
-  ucfs_london_current_domain = local.ucfs_london_domains[local.environment]
 
   ucfs_london_ha_broker_list = [
     "${local.ucfs_ha_broker_prefix}00.${local.ucfs_london_current_domain}",
@@ -120,12 +148,10 @@ locals {
   }
 
   kafka_topic_regex = {
-    //match any "db.*" collections i.e. db.aa.bb, with only two literal dots allowed
-    //DW-4748 & DW-4827 - Allow extra dot in last matcher group for db.crypto.encryptedData.unencrypted
-    development = "^(db[.]{1}[-\\\\w]+[.]{1}[-.\\\\w]+)$"
-    qa          = "^(db[.]{1}[-\\\\w]+[.]{1}[-.\\\\w]+)$"
-    integration = "^(db[.]{1}[-\\\\w]+[.]{1}[-.\\\\w]+)$"
-    preprod     = "^(db[.]{1}[-\\\\w]+[.]{1}[-.\\\\w]+)$"
-    production  = "^(db[.]{1}[-\\\\w]+[.]{1}[-.\\\\w]+)$"
+    development = "^(db[.])core[.](claimant|contract|statement)$"
+    qa          = "^(db[.])core[.](claimant|contract|statement)$"
+    integration = "^(db[.])core[.](claimant|contract|statement)$"
+    preprod     = "^(db[.])core[.](claimant|contract|statement)$"
+    production  = "^(db[.])core[.](claimant|contract|statement)$"
   }
 }
