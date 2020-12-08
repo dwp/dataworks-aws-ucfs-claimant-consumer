@@ -1,5 +1,5 @@
 locals {
-  security_group_rules = [
+  egress_only_security_group_rules = [
     {
       name : "UCFS Kafka brokers"
       port : local.kafka_broker_port[local.environment]
@@ -11,6 +11,12 @@ locals {
       port : 53
       protocol : "all"
       destination : distinct(local.ucfs_london_nameservers_cidr_blocks[local.environment]) # Using distinct as dev & QA have duplicate values
+    },
+    {
+      name : "DKS"
+      port : 8443
+      protocol : "tcp"
+      destination : local.dks_subnet_cidr
     },
   ]
 }
@@ -30,7 +36,7 @@ resource "aws_security_group" "claimant_api_kafka_consumer" {
 }
 
 resource "aws_security_group_rule" "egress" {
-  for_each          = { for security_group_rule in local.security_group_rules : security_group_rule.name => security_group_rule }
+  for_each          = { for security_group_rule in local.egress_only_security_group_rules : security_group_rule.name => security_group_rule }
   description       = "Allow outbound requests to ${each.value.name}"
   type              = "egress"
   from_port         = each.value.port
