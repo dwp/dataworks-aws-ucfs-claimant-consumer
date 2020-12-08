@@ -2,8 +2,8 @@ locals {
   certificate_auth_public_cert_bucket = data.terraform_remote_state.certificate_authority.outputs.public_cert_bucket
   k2hb_data_source_is_ucfs            = data.terraform_remote_state.ingestion.outputs.locals.k2hb_data_source_is_ucfs
 
-  dks_subnet_cidr               = data.terraform_remote_state.crypto.outputs.dks_subnet.cidr_blocks
-  dks_endpoint_url              = data.terraform_remote_state.crypto.outputs.dks_endpoint[local.environment]
+  dks_subnet_cidr          = data.terraform_remote_state.crypto.outputs.dks_subnet.cidr_blocks
+  dks_endpoint_url         = data.terraform_remote_state.crypto.outputs.dks_endpoint[local.environment]
   dlq_kafka_consumer_topic = data.terraform_remote_state.ingestion.outputs.locals.dlq_kafka_consumer_topic // must match what k2s3 uses
 
   stub_bootstrap_servers       = data.terraform_remote_state.ingestion.outputs.locals.stub_bootstrap_servers
