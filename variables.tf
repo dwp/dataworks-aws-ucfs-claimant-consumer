@@ -44,10 +44,10 @@ variable "ucfs_claimant_kafka_consumer_version" {
 variable "java_max_mem_allocation" {
   description = "Max memory allocation for JVM"
   default = {
-    development = "-Xmx3g"
-    qa          = "-Xmx3g"
-    integration = "-Xmx3g"
-    preprod     = "-Xmx3g"
-    production  = "-Xmx3g"
+    development = "-Xmx2g"
+    qa          = "-Xmx2g"
+    integration = "-Xmx2g"
+    preprod     = "-Xmx2g"
+    production  = "-Xmx2g"
   }
 }
