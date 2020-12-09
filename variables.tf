@@ -45,9 +45,9 @@ variable "java_max_mem_allocation" {
   description = "Max memory allocation for JVM"
   default = {
     development = "-Xmx3g"
-    qa = "-Xmx3g"
+    qa          = "-Xmx3g"
     integration = "-Xmx3g"
-    preprod = "-Xmx3g"
-    production = "-Xmx3g"
+    preprod     = "-Xmx3g"
+    production  = "-Xmx3g"
   }
 }
