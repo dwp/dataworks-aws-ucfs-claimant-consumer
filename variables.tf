@@ -40,3 +40,13 @@ variable "ucfs_claimant_kafka_consumer_version" {
   type        = string
   default     = ":latest"
 }
+
+variable "kafka_max_memory_allocation" {
+  default = {
+    development = "-Xmx3g"
+    qa          = "-Xmx3g"
+    integration = "-Xmx3g"
+    preprod     = "-Xmx3g"
+    production  = "-Xmx3g"
+  }
+}

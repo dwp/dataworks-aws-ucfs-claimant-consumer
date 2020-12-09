@@ -138,6 +138,10 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
       {
         "name": "NON_PROXIED_ENDPOINTS",
         "value": "${local.non_proxied_endpoints}"
+      },
+      {
+        "name": "KAFKA_MAX_MEMORY_ALLOCATION",
+        "value": "${var.kafka_max_memory_allocation}"
       }
     ]
   }
