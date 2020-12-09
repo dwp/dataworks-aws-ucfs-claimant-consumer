@@ -141,7 +141,7 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
       },
       {
         "name": "KAFKA_MAX_MEMORY_ALLOCATION",
-        "value": "${var.kafka_max_memory_allocation}"
+        "value": "${var.kafka_max_memory_allocation[local.environment]}"
       }
     ]
   }
