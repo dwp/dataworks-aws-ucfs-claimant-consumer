@@ -105,7 +105,7 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
       },
       {
         "name": "KAFKA_USE_SSL",
-        "value": "false"
+        "value": "true"
       },
       {
         "name": "KAFKA_CERT_MODE",
@@ -140,8 +140,8 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
         "value": "${local.non_proxied_endpoints}"
       },
       {
-        "name": "KAFKA_MAX_MEMORY_ALLOCATION",
-        "value": "${var.kafka_max_memory_allocation[local.environment]}"
+        "name": "JAVA_MAX_MEM_ALLOCATION",
+        "value": "${var.java_max_mem_allocation[local.environment]}"
       }
     ]
   }
