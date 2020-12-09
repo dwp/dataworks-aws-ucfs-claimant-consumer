@@ -149,7 +149,7 @@ resource "aws_ecs_service" "claimant_api_kafka_consumer" {
   name            = var.friendly_name
   cluster         = data.terraform_remote_state.dataworks_aws_ingestion_ecs_cluster.outputs.ingestion_ecs_cluster.id
   task_definition = aws_ecs_task_definition.claimant_api_kafka_consumer.arn
-  desired_count   = 0
+  desired_count   = 1
   launch_type     = "EC2"
 
   network_configuration {
