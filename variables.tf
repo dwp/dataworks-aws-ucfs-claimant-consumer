@@ -40,3 +40,14 @@ variable "ucfs_claimant_kafka_consumer_version" {
   type        = string
   default     = ":latest"
 }
+
+variable "java_max_mem_allocation" {
+  description = "Max memory allocation for JVM"
+  default = {
+    development = "-Xmx2g"
+    qa          = "-Xmx2g"
+    integration = "-Xmx2g"
+    preprod     = "-Xmx2g"
+    production  = "-Xmx2g"
+  }
+}
