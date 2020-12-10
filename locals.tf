@@ -15,13 +15,14 @@ locals {
   task_count = {
     development = 3
     qa          = 3
-    integration = 3
-    preprod     = 3
-    production  = 3
+    integration = 0
+    preprod     = 0
+    production  = 0
   }
 
-  certificate_auth_public_cert_bucket = data.terraform_remote_state.certificate_authority.outputs.public_cert_bucket
-  k2hb_data_source_is_ucfs            = data.terraform_remote_state.ingestion.outputs.locals.k2hb_data_source_is_ucfs
+  certificate_auth_public_cert_bucket      = data.terraform_remote_state.certificate_authority.outputs.public_cert_bucket
+  certificate_auth_mgmt_public_cert_bucket = data.terraform_remote_state.mgmt_certificate_authority.outputs.public_cert_bucket
+  k2hb_data_source_is_ucfs                 = data.terraform_remote_state.ingestion.outputs.locals.k2hb_data_source_is_ucfs
 
   dks_subnet_cidr          = data.terraform_remote_state.crypto.outputs.dks_subnet.cidr_blocks
   dks_endpoint_url         = data.terraform_remote_state.crypto.outputs.dks_endpoint[local.environment]
@@ -81,7 +82,7 @@ locals {
   }
 
   kafka_consumer_truststore_aliases = {
-    development = "ucfs_ca"
+    development = "ucfs_ca,dataworks_mgt_root_ca"
     qa          = "ucfs_ca"
     integration = "ucfs_ca"
     preprod     = "ucfs_ca"
@@ -89,7 +90,7 @@ locals {
   }
 
   kafka_consumer_truststore_certs = {
-    development = "s3://${local.certificate_auth_public_cert_bucket.id}/ca_certificates/ucfs/root_ca.pem"
+    development = "s3://${local.certificate_auth_public_cert_bucket.id}/ca_certificates/ucfs/root_ca.pem,s3://${local.certificate_auth_mgmt_public_cert_bucket.id}/ca_certificates/dataworks/dataworks_root_ca.pem"
     qa          = "s3://${local.certificate_auth_public_cert_bucket.id}/ca_certificates/ucfs/root_ca.pem"
     integration = "s3://${local.certificate_auth_public_cert_bucket.id}/ca_certificates/ucfs/root_ca.pem"
     preprod     = "s3://${local.certificate_auth_public_cert_bucket.id}/ca_certificates/ucfs/root_ca.pem"
