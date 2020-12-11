@@ -112,11 +112,11 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
         "value": "RETRIEVE"
       },
       {
-        "name": "KAFKA_CONSUMER_TRUSTSTORE_ALIASES",
+        "name": "RETRIEVER_TRUSTSTORE_ALIASES",
         "value": "${local.kafka_consumer_truststore_aliases[local.environment]}"
       },
       {
-        "name": "KAFKA_CONSUMER_TRUSTSTORE_CERTS",
+        "name": "RETRIEVER_TRUSTSTORE_CERTS",
         "value": "${local.kafka_consumer_truststore_certs[local.environment]}"
       },
       {
