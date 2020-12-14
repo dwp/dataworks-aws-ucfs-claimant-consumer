@@ -36,6 +36,13 @@ data "aws_iam_policy_document" "claimant_api_kafka_consumer" {
   }
 
   statement {
+    sid       = "${local.iam_name}GetCAMgmtCertS3"
+    effect    = "Allow"
+    actions   = ["s3:GetObject"]
+    resources = ["${data.terraform_remote_state.mgmt_certificate_authority.outputs.public_cert_bucket.arn}/*"]
+  }
+
+  statement {
     sid    = "${local.iam_name}WriteLogs"
     effect = "Allow"
     actions = [

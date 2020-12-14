@@ -44,6 +44,7 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
   container_definitions = <<DEFINITION
 [
   {
+    "command": ["java", "${var.java_max_mem_allocation[local.environment]}", "-jar", "ucfs-claimant-kafka-consumer.jar"],
     "image": "${local.account.management}.${data.terraform_remote_state.ingestion.outputs.vpc.vpc.ecr_dkr_domain_name}/${var.ucfs_claimant_kafka_consumer}${var.ucfs_claimant_kafka_consumer_version}",
     "name": "${var.friendly_name}",
     "networkMode": "awsvpc",
@@ -126,11 +127,11 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
         "value": "RETRIEVE"
       },
       {
-        "name": "KAFKA_CONSUMER_TRUSTSTORE_ALIASES",
+        "name": "RETRIEVER_TRUSTSTORE_ALIASES",
         "value": "${local.kafka_consumer_truststore_aliases[local.environment]}"
       },
       {
-        "name": "KAFKA_CONSUMER_TRUSTSTORE_CERTS",
+        "name": "RETRIEVER_TRUSTSTORE_CERTS",
         "value": "${local.kafka_consumer_truststore_certs[local.environment]}"
       },
       {
@@ -152,10 +153,6 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
       {
         "name": "NON_PROXIED_ENDPOINTS",
         "value": "${local.non_proxied_endpoints}"
-      },
-      {
-        "name": "JAVA_MAX_MEM_ALLOCATION",
-        "value": "${var.java_max_mem_allocation[local.environment]}"
       }
     ]
   }
