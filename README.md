@@ -1,22 +1,28 @@
-# dataworks-aws-ucfs-claimant-consumer
+# UCFS Claimant Consumer Infrastructure
 
 ## Description
 
-This repo contains Makefile and base terraform folders and jinja2 files to fit the standard pattern.
-This repo is a base to create new Terraform repos, renaming the template files and adding the githooks submodule, making the repo ready for use.
+The terraform infrastructure code present in this repo, raises an ECS service and task for [ucfs-claimant-kafka-consumer](https://github.com/dwp/ucfs-claimant-kafka-consumer)
 
-Running aviator will create the pipeline required on the AWS-Concourse instance, in order pass a mandatory CI ran status check.  this will likely require you to login to Concourse, if you haven't already.
-
-After cloning this repo, please generate `terraform.tf` and `terraform.tfvars` files:  
+## Local apply
+After cloning this repo, please generate `terraform.tf` and `terraform.tfvars` files by running:
 `make bootstrap`
 
-In addition, you may want to do the following: 
+These files are generated via their jinja2 counter parts to protect account information and other secrets.
 
-1. Create non-default Terraform workspaces as and if required:  
-    `make terraform-workspace-new workspace=<workspace_name>` e.g.  
-    ```make terraform-workspace-new workspace=qa```
+## Cloudwatch logs
 
-1. Configure Concourse CI pipeline:
-    1. Add/remove jobs in `./ci/jobs` as required 
-    1. Create CI pipeline:  
-`aviator`
+The ECS task claimant_api_kafka_consumer runs on the Ingestion ECS cluster. Container logs are therefore available here:
+`/aws/ecs/ingestion/claimant-api-kafka-consumer`
+
+## Concourse Pipelines
+
+A Concourse pipeline exists for this repo. So that it is seperated from other infrastructure. It is called `ucfs-claimant-consumer`.
+Is is in the main AWS Concourse `dataworks` team. The files for this pipeline are in the `/ci` folder.
+
+The pipeline doesn't self update, so be sure to manually update from the repo, when making changes, the following commands can be executed:
+
+```
+make concourse-login
+make update-pipeline
+```
