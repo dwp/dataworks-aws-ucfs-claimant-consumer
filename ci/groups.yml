@@ -9,3 +9,10 @@ groups:
   - name: pull-request
     jobs:
       - dataworks-aws-ucfs-claimant-consumer-pr
+  - name: rotate-passwords
+    jobs:
+      - rotate-mysql-password-api-kafka-consumer-development
+      - rotate-mysql-password-api-kafka-consumer-qa
+      - rotate-mysql-password-api-kafka-consumer-integration
+      - rotate-mysql-password-api-kafka-consumer-preprod
+      - rotate-mysql-password-api-kafka-consumer-production
