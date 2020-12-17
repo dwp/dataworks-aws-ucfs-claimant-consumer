@@ -45,3 +45,23 @@ resource "aws_security_group_rule" "egress" {
   cidr_blocks       = each.value.destination
   security_group_id = aws_security_group.claimant_api_kafka_consumer.id
 }
+
+resource "aws_security_group_rule" "egress_rds" {
+  description              = "Requests to RDS"
+  type                     = "egress"
+  from_port                = 3306
+  to_port                  = 3306
+  protocol                 = "tcp"
+  source_security_group_id = data.terraform_remote_state.ucfs_claimant.outputs.rds.sg_id
+  security_group_id        = aws_security_group.claimant_api_kafka_consumer.id
+}
+
+resource "aws_security_group_rule" "remote_ingress_rds" {
+  description              = "Requests from Claimant Kafka Consumer"
+  type                     = "ingress"
+  from_port                = 3306
+  to_port                  = 3306
+  protocol                 = "tcp"
+  source_security_group_id = aws_security_group.claimant_api_kafka_consumer.id
+  security_group_id        = data.terraform_remote_state.ucfs_claimant.outputs.rds.sg_id
+}
