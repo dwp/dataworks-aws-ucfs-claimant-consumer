@@ -63,6 +63,14 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
     ],
     "environment": [
       {
+        "name": "AWS_CMK_ALIAS",
+        "value": "${data.terraform_remote_state.ucfs_claimant.outputs.ucfs_claimant_api_etl_cmk.name}"
+      },
+      {
+        "name": "AWS_SALT_PARAMETER_NAME",
+        "value": "${data.terraform_remote_state.ucfs_claimant.outputs.nino_salt_london_ssm_param}"
+      },
+      {
         "name": "CONTAINER_VERSION",
         "value": "${var.ucfs_claimant_kafka_consumer_version}"
       },
