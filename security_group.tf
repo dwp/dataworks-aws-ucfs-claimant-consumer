@@ -21,6 +21,16 @@ locals {
   ]
 }
 
+locals {
+  security_group_rules = [
+    {
+      name : "RDS"
+      port : 3306
+      destination : sort(data.terraform_remote_state.ucfs_claimant.outputs.rds.vpc_security_group_ids)[0] # sort() used to convert set to indexed list
+    },
+  ]
+}
+
 resource "aws_security_group" "claimant_api_kafka_consumer" {
   name                   = var.friendly_name
   description            = "Claimant API Kafka Consumer"
@@ -35,7 +45,7 @@ resource "aws_security_group" "claimant_api_kafka_consumer" {
   )
 }
 
-resource "aws_security_group_rule" "egress" {
+resource "aws_security_group_rule" "egress_only" {
   for_each          = { for security_group_rule in local.egress_only_security_group_rules : security_group_rule.name => security_group_rule }
   description       = "Allow outbound requests to ${each.value.name}"
   type              = "egress"
@@ -46,22 +56,24 @@ resource "aws_security_group_rule" "egress" {
   security_group_id = aws_security_group.claimant_api_kafka_consumer.id
 }
 
-resource "aws_security_group_rule" "egress_rds" {
-  description              = "Requests to RDS"
-  type                     = "egress"
-  from_port                = 3306
-  to_port                  = 3306
+resource "aws_security_group_rule" "ingress" {
+  for_each                 = { for security_group_rule in local.security_group_rules : security_group_rule.name => security_group_rule }
+  description              = "Allow inbound requests from ${each.value.name}"
+  type                     = "ingress"
+  from_port                = each.value.port
+  to_port                  = each.value.port
   protocol                 = "tcp"
-  source_security_group_id = data.terraform_remote_state.ucfs_claimant.outputs.rds.sg_id
-  security_group_id        = aws_security_group.claimant_api_kafka_consumer.id
+  security_group_id        = each.value.destination
+  source_security_group_id = aws_security_group.claimant_api_kafka_consumer.id
 }
 
-resource "aws_security_group_rule" "remote_ingress_rds" {
-  description              = "Requests from Claimant Kafka Consumer"
-  type                     = "ingress"
-  from_port                = 3306
-  to_port                  = 3306
+resource "aws_security_group_rule" "egress" {
+  for_each                 = { for security_group_rule in local.security_group_rules : security_group_rule.port => security_group_rule }
+  description              = "Allow outbound requests to ${each.value.name}"
+  type                     = "egress"
+  from_port                = each.value.port
+  to_port                  = each.value.port
   protocol                 = "tcp"
-  source_security_group_id = aws_security_group.claimant_api_kafka_consumer.id
-  security_group_id        = data.terraform_remote_state.ucfs_claimant.outputs.rds.sg_id
+  source_security_group_id = each.value.destination
+  security_group_id        = aws_security_group.claimant_api_kafka_consumer.id
 }
