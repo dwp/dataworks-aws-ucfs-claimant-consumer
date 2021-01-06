@@ -147,6 +147,10 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
         "value": "${local.dks_endpoint_url}"
       },
       {
+        "name": "AWS_RDS_SECRET_NAME",
+        "value": "${aws_secretsmanager_secret.claimant_api_kafka_consumer.name}"
+      },
+      {
         "name": "AWS_REGION",
         "value": "${var.region}"
       },
