@@ -83,4 +83,14 @@ data "aws_iam_policy_document" "claimant_api_kafka_consumer" {
 
     resources = [data.terraform_remote_state.ucfs_claimant.outputs.ucfs_claimant_api_etl_cmk.arn, ]
   }
+
+  statement {
+    sid    = "${local.iam_name}GetRdsCreds"
+    effect = "Allow"
+    actions = [
+      "secretsmanager:GetSecretValue",
+    ]
+
+    resources = [aws_secretsmanager_secret.claimant_api_kafka_consumer.arn]
+  }
 }

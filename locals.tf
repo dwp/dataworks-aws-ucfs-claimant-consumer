@@ -96,7 +96,7 @@ locals {
   }
 
   log_level = {
-    development = "DEBUG"
+    development = "INFO"
     qa          = "INFO"
     integration = "INFO"
     preprod     = "INFO"
