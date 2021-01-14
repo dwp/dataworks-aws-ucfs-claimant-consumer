@@ -79,6 +79,7 @@ data "aws_iam_policy_document" "claimant_api_kafka_consumer" {
     actions = [
       "kms:Decrypt",
       "kms:Encrypt",
+      "kms:GenerateDataKey",
     ]
 
     resources = [data.terraform_remote_state.ucfs_claimant.outputs.ucfs_claimant_api_etl_cmk.arn, ]
