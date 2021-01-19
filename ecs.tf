@@ -136,11 +136,11 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
       },
       {
         "name": "RETRIEVER_TRUSTSTORE_ALIASES",
-        "value": "${local.kafka_consumer_truststore_aliases[local.environment]}"
+        "value": "${local.kafka_consumer_truststore_aliases}"
       },
       {
         "name": "RETRIEVER_TRUSTSTORE_CERTS",
-        "value": "${local.kafka_consumer_truststore_certs[local.environment]}"
+        "value": "${local.kafka_consumer_truststore_certs}"
       },
       {
         "name": "DKS_URL",

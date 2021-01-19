@@ -79,21 +79,9 @@ locals {
     production  = local.uc_kafka_broker_port_https
   }
 
-  kafka_consumer_truststore_aliases = {
-    development = "ucfs_ca,dataworks_mgt_root_ca"
-    qa          = "ucfs_ca"
-    integration = "ucfs_ca"
-    preprod     = "ucfs_ca"
-    production  = "ucfs_ca"
-  }
+  kafka_consumer_truststore_aliases = "ucfs_ca,dataworks_mgt_root_ca"
 
-  kafka_consumer_truststore_certs = {
-    development = "s3://${local.certificate_auth_public_cert_bucket.id}/ca_certificates/ucfs/root_ca.pem,s3://${local.certificate_auth_mgmt_public_cert_bucket.id}/ca_certificates/dataworks/dataworks_root_ca.pem"
-    qa          = "s3://${local.certificate_auth_public_cert_bucket.id}/ca_certificates/ucfs/root_ca.pem"
-    integration = "s3://${local.certificate_auth_public_cert_bucket.id}/ca_certificates/ucfs/root_ca.pem"
-    preprod     = "s3://${local.certificate_auth_public_cert_bucket.id}/ca_certificates/ucfs/root_ca.pem"
-    production  = "s3://${local.certificate_auth_public_cert_bucket.id}/ca_certificates/ucfs/root_ca.pem"
-  }
+  kafka_consumer_truststore_certs = "s3://${local.certificate_auth_public_cert_bucket.id}/ca_certificates/ucfs/root_ca.pem,s3://${local.certificate_auth_mgmt_public_cert_bucket.id}/ca_certificates/dataworks/dataworks_root_ca.pem"
 
   log_level = {
     development = "INFO"
