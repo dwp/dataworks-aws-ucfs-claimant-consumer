@@ -17,7 +17,7 @@ locals {
     qa          = 3
     integration = 3
     preprod     = 3
-    production  = 3
+    production  = 6
   }
 
   certificate_auth_public_cert_bucket      = data.terraform_remote_state.certificate_authority.outputs.public_cert_bucket
