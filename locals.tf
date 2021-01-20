@@ -15,9 +15,9 @@ locals {
   task_count = {
     development = 3
     qa          = 3
-    integration = 0
-    preprod     = 0
-    production  = 0
+    integration = 3
+    preprod     = 3
+    production  = 3
   }
 
   certificate_auth_public_cert_bucket      = data.terraform_remote_state.certificate_authority.outputs.public_cert_bucket
