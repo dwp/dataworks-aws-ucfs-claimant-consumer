@@ -26,3 +26,7 @@ The pipeline doesn't self update, so be sure to manually update from the repo, w
 make concourse-login
 make update-pipeline
 ```
+
+## ECS task management
+
+A set of Concourse jobs exist to restart and scale up or down the claimant_api_kafka_consumer ECS task. These jobs can be found in Concourse under `Utility` team in `manage-ecs-services` pipeline. Please see more [here](https://github.com/dwp/dataworks-admin-utils/blob/master/README.md#pipeline-manage-ecs-services).

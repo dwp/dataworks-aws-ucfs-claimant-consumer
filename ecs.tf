@@ -63,6 +63,14 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
     ],
     "environment": [
       {
+        "name": "AWS_CMK_ALIAS",
+        "value": "${data.terraform_remote_state.ucfs_claimant.outputs.ucfs_claimant_api_etl_cmk.name}"
+      },
+      {
+        "name": "AWS_SALT_PARAMETER_NAME",
+        "value": "${data.terraform_remote_state.ucfs_claimant.outputs.nino_salt_london_ssm_param}"
+      },
+      {
         "name": "CONTAINER_VERSION",
         "value": "${var.ucfs_claimant_kafka_consumer_version}"
       },
@@ -128,15 +136,23 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
       },
       {
         "name": "RETRIEVER_TRUSTSTORE_ALIASES",
-        "value": "${local.kafka_consumer_truststore_aliases[local.environment]}"
+        "value": "${local.kafka_consumer_truststore_aliases}"
       },
       {
         "name": "RETRIEVER_TRUSTSTORE_CERTS",
-        "value": "${local.kafka_consumer_truststore_certs[local.environment]}"
+        "value": "${local.kafka_consumer_truststore_certs}"
       },
       {
         "name": "DKS_URL",
         "value": "${local.dks_endpoint_url}"
+      },
+      {
+        "name": "AWS_RDS_SECRET_NAME",
+        "value": "${aws_secretsmanager_secret.claimant_api_kafka_consumer.name}"
+      },
+      {
+        "name": "RDS_CA_CERT_PATH",
+        "value": ""
       },
       {
         "name": "AWS_REGION",
