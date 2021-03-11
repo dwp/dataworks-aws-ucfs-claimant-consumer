@@ -175,10 +175,10 @@ locals {
   }
 
   claimant_api_consumer_alert_on_running_tasks_less_than_desired = {
-    development   = true
-    qa            = true
-    integraton    = true
-    preproduction = true
-    production    = true
+    development = true
+    qa          = true
+    integration = true
+    preprod     = true
+    production  = true
   }
 }
