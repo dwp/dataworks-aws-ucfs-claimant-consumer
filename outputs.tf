@@ -20,6 +20,6 @@ output "claimant_api_kafka_consumer" {
 
 output "claimant_api_kafka_consumer_iam" {
   value = {
-    role   = aws_iam_role.claimant_api_kafka_consumer
+    role = aws_iam_role.claimant_api_kafka_consumer
   }
 }
