@@ -152,10 +152,10 @@ locals {
 
   monitoring_topic_arn = data.terraform_remote_state.security-tools.outputs.sns_topic_london_monitoring.arn
 
-  claimant_api_consumer_metrics_namespace             = "/app/claimant-api-kafka-consumer"
+  claimant_api_consumer_metrics_namespace = "/app/claimant-api-kafka-consumer"
 
-  claimant_api_consumer_processed_batch = "The number of batches successfully processed into the Claimant RDS"
-  claimant_api_consumer_failed_batches  = "The number of batches which have failed to be processed into the Claimant RDS"
+  claimant_api_consumer_processed_batch                 = "The number of batches successfully processed into the Claimant RDS"
+  claimant_api_consumer_failed_batches                  = "The number of batches which have failed to be processed into the Claimant RDS"
   claimant_api_consumer_running_tasks_less_than_desired = "Claimant API Kafka Consumer - Running tasks less than desired for more than 5 minutes"
 
   claimant_api_consumer_alert_on_lack_of_processed_batches = {
@@ -174,7 +174,7 @@ locals {
     production    = true
   }
 
-  claimant_api_consumer_running_tasks_less_than_desired = {
+  claimant_api_consumer_alert_on_running_tasks_less_than_desired = {
     development   = true
     qa            = true
     integraton    = true

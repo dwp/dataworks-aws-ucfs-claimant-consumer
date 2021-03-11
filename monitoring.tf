@@ -62,17 +62,17 @@ resource "aws_cloudwatch_metric_alarm" "failed_processing_batch" {
   comparison_operator = "GreaterThanThreshold"
 
   tags = merge(
-  local.common_tags,
-  {
-    Name              = "claimant-api-kafka-consumer-failed-processing-batch",
-    notification_type = "Warning",
-    severity          = "High"
-  },
+    local.common_tags,
+    {
+      Name              = "claimant-api-kafka-consumer-failed-processing-batch",
+      notification_type = "Warning",
+      severity          = "High"
+    },
   )
 }
 
 resource "aws_cloudwatch_metric_alarm" "running_tasks_less_than_desired" {
-  count               = local.claimant_api_consumer_running_tasks_less_than_desired[local.environment] ? 1 : 0
+  count               = local.claimant_api_consumer_alert_on_running_tasks_less_than_desired[local.environment] ? 1 : 0
   alarm_name          = local.claimant_api_consumer_running_tasks_less_than_desired
   alarm_description   = "Managed by ${local.common_tags.Application} repository"
   alarm_actions       = [local.monitoring_topic_arn]
@@ -110,10 +110,10 @@ resource "aws_cloudwatch_metric_alarm" "running_tasks_less_than_desired" {
 
     metric {
       metric_name = "DesiredTaskCount"
-      namespace = "ECS/ContainerInsights"
-      period = "60"
-      stat = "Sum"
-      unit = "Count"
+      namespace   = "ECS/ContainerInsights"
+      period      = "60"
+      stat        = "Sum"
+      unit        = "Count"
 
       dimensions = {
         ServiceName = "claimant-api-kafka-consumer"
@@ -123,11 +123,11 @@ resource "aws_cloudwatch_metric_alarm" "running_tasks_less_than_desired" {
   }
 
   tags = merge(
-  local.common_tags,
-  {
-    Name              = "claimant-api-kafka-consumer-failed-processing-batch",
-    notification_type = "Warning",
-    severity          = "High"
-  },
+    local.common_tags,
+    {
+      Name              = "claimant-api-kafka-consumer-failed-processing-batch",
+      notification_type = "Warning",
+      severity          = "High"
+    },
   )
 }
