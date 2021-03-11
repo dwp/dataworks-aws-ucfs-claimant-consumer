@@ -38,7 +38,7 @@ resource "aws_cloudwatch_metric_alarm" "successfully_processed_batch" {
 resource "aws_cloudwatch_log_metric_filter" "failed_processing_batch" {
   log_group_name = aws_cloudwatch_log_group.claimant_api_kafka_consumer.name
   name           = local.claimant_api_consumer_failed_batches
-  pattern        = "{$.message = \"Inserted record\" || $.message = \"Updated record\"}"
+  pattern        = "{$.message = \"Batch failed, not committing offset, resetting position to last commit\"}"
 
   metric_transformation {
     name      = local.claimant_api_consumer_failed_batches
@@ -77,7 +77,7 @@ resource "aws_cloudwatch_metric_alarm" "running_tasks_less_than_desired" {
   alarm_description   = "Managed by ${local.common_tags.Application} repository"
   alarm_actions       = [local.monitoring_topic_arn]
   treat_missing_data  = "breaching"
-  evaluation_periods  = 2
+  evaluation_periods  = 5
   threshold           = 0
   comparison_operator = "GreaterThanThreshold"
 
