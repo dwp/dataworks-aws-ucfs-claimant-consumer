@@ -135,6 +135,10 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
         "value": "RETRIEVE"
       },
       {
+        "name": "METRICS_PUSHGATEWAY_HOST",
+        "value": "${data.terraform_remote_state.metrics_infrastructure.outputs.ingest_pushgateway_hostname}"
+      },
+      {
         "name": "RETRIEVER_TRUSTSTORE_ALIASES",
         "value": "${local.kafka_consumer_truststore_aliases}"
       },
