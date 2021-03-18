@@ -155,8 +155,8 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
         "value": "${aws_secretsmanager_secret.claimant_api_kafka_consumer.name}"
       },
       {
-        "name": "RDS_CA_CERT_PATH",
-        "value": ""
+        "name": "RDS_USE_SSL",
+        "value": "true"
       },
       {
         "name": "AWS_REGION",
