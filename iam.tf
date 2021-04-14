@@ -82,7 +82,7 @@ data "aws_iam_policy_document" "claimant_api_kafka_consumer" {
       "kms:GenerateDataKey",
     ]
 
-    resources = [data.terraform_remote_state.ucfs_claimant.outputs.ucfs_claimant_api_etl_cmk.arn, ]
+    resources = [data.terraform_remote_state.ucfs_claimant.outputs.ucfs_claimant_api_etl_cmk.arn, data.terraform_remote_state.ucfs_claimant.outputs.ucfs_etl_cmk.arn]
   }
 
   statement {
