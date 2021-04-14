@@ -135,6 +135,10 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
         "value": "RETRIEVE"
       },
       {
+        "name": "METRICS_PUSHGATEWAY_HOST",
+        "value": "${data.terraform_remote_state.metrics_infrastructure.outputs.ingest_pushgateway_hostname}"
+      },
+      {
         "name": "RETRIEVER_TRUSTSTORE_ALIASES",
         "value": "${local.kafka_consumer_truststore_aliases}"
       },
@@ -151,8 +155,8 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
         "value": "${aws_secretsmanager_secret.claimant_api_kafka_consumer.name}"
       },
       {
-        "name": "RDS_CA_CERT_PATH",
-        "value": ""
+        "name": "RDS_USE_SSL",
+        "value": "true"
       },
       {
         "name": "AWS_REGION",
