@@ -64,7 +64,7 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
     "environment": [
       {
         "name": "AWS_CMK_ALIAS",
-        "value": "${local.claimant_api_consumer_use_ireland_kms ? data.terraform_remote_state.ucfs_claimant.outputs.ucfs_etl_cmk.arn : data.terraform_remote_state.ucfs_claimant.outputs.ucfs_claimant_api_etl_cmk.name}"
+        "value": "${local.claimant_api_consumer_use_ireland_kms[local.environment] ? data.terraform_remote_state.ucfs_claimant.outputs.ucfs_etl_cmk.arn : data.terraform_remote_state.ucfs_claimant.outputs.ucfs_claimant_api_etl_cmk.name}"
       },
       {
         "name": "AWS_SALT_PARAMETER_NAME",
