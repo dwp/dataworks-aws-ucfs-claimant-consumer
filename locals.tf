@@ -185,8 +185,8 @@ locals {
   claimant_api_consumer_use_ireland_kms = {
     development = true
     qa          = true
-    integration = false
-    preprod     = false
-    production  = false
+    integration = true
+    preprod     = true
+    production  = true
   }
 }
