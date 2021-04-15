@@ -68,7 +68,7 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
       },
       {
         "name": "AWS_KMS_REGION",
-        "value": "${local.claimant_api_consumer_use_ireland_kms[local.environment] ? "eu-west-1" : "eu_west-2"}"
+        "value": "${local.claimant_api_consumer_use_ireland_kms[local.environment] ? "eu-west-1" : "eu-west-2"}"
       },
       {
         "name": "AWS_SALT_PARAMETER_NAME",
