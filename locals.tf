@@ -15,7 +15,7 @@ locals {
   task_count = {
     development = 3
     qa          = 3
-    integration = 3
+    integration = 9
     preprod     = 3
     production  = 6
   }
