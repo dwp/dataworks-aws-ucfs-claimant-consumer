@@ -29,7 +29,7 @@ resource "aws_cloudwatch_metric_alarm" "successfully_processed_batch" {
     {
       Name              = "claimant-api-kafka-consumer-processed-batches",
       notification_type = "Warning",
-      severity          = "High"
+      severity          = "Critical"
     },
   )
 }
@@ -127,7 +127,7 @@ resource "aws_cloudwatch_metric_alarm" "running_tasks_less_than_desired" {
     {
       Name              = "claimant-api-kafka-consumer-failed-processing-batch",
       notification_type = "Warning",
-      severity          = "High"
+      severity          = "Critical"
     },
   )
 }
