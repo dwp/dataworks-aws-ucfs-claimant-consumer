@@ -189,4 +189,12 @@ locals {
     preprod     = false
     production  = false
   }
+
+  claimant_api_consumer_use_kafka_stub = {
+    development = true
+    qa          = true
+    integration = true
+    preprod     = false
+    production  = false
+  }
 }
