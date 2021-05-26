@@ -189,4 +189,20 @@ locals {
     preprod     = false
     production  = false
   }
+
+  peer_with_ucfs_london = {
+    development = false
+    qa          = false
+    integration = false
+    preprod     = true
+    production  = true
+  }
+
+  claimant_api_consumer_use_kafka_stub = {
+    development = true
+    qa          = true
+    integration = true
+    preprod     = false
+    production  = false
+  }
 }

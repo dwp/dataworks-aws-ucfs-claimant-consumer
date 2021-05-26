@@ -77,3 +77,14 @@ resource "aws_security_group_rule" "egress" {
   source_security_group_id = each.value.destination
   security_group_id        = aws_security_group.claimant_api_kafka_consumer.id
 }
+
+resource "aws_security_group_rule" "ucfs_claimant_consumer_to_stub_ucfs_kafka" {
+  count                    = local.claimant_api_consumer_use_kafka_stub[local.environment] ? length(data.terraform_remote_state.ingestion.outputs.stub_ucfs.stub_ucfs_kafka_ports) : 0
+  description              = "UCFS claimaint consumer to stub broker"
+  type                     = "ingress"
+  source_security_group_id = aws_security_group.claimant_api_kafka_consumer.id
+  protocol                 = "tcp"
+  from_port                = data.terraform_remote_state.ingestion.outputs.stub_ucfs.stub_ucfs_kafka_ports[count.index]
+  to_port                  = data.terraform_remote_state.ingestion.outputs.stub_ucfs.stub_ucfs_kafka_ports[count.index]
+  security_group_id        = data.terraform_remote_state.ingestion.outputs.stub_ucfs.sg_id
+}
