@@ -9,20 +9,6 @@ resource "aws_cloudwatch_log_group" "claimant_api_kafka_consumer" {
   )
 }
 
-resource "aws_secretsmanager_secret" "claimant_api_kafka_consumer" {
-  name        = var.friendly_name
-  description = "Credentials for ${var.friendly_name} MySQL user in Claimant API RDS"
-
-  tags = merge(
-    {
-      Name                  = var.friendly_name
-      AllowAdminAccess      = "False",
-      ProtectsSensitiveData = "True",
-    },
-    local.common_tags,
-  )
-}
-
 resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
   family                   = var.friendly_name
   network_mode             = "awsvpc"
@@ -156,7 +142,7 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
       },
       {
         "name": "AWS_RDS_SECRET_NAME",
-        "value": "${aws_secretsmanager_secret.claimant_api_kafka_consumer.name}"
+        "value": "${data.terraform_remote_state.ucfs_claimant.outputs.claimant_api_kafka_consumer_rds_user_sercret.name}"
       },
       {
         "name": "RDS_USE_SSL",

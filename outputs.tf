@@ -6,10 +6,6 @@ output "claimant_api_kafka_consumer_sg" {
   }
 }
 
-output "secretsmanager_ucfs_claimant_api_kafka_consumer" {
-  value = aws_secretsmanager_secret.claimant_api_kafka_consumer
-}
-
 output "claimant_api_kafka_consumer" {
   value = {
     task_count   = aws_ecs_service.claimant_api_kafka_consumer.desired_count
