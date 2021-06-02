@@ -156,7 +156,7 @@ resource "aws_ecs_task_definition" "claimant_api_kafka_consumer" {
       },
       {
         "name": "AWS_RDS_SECRET_NAME",
-        "value": "${aws_secretsmanager_secret.claimant_api_kafka_consumer.name}"
+        "value": "${data.terraform_remote_state.ucfs_claimant.outputs.claimant_api_kafka_consumer_rds_user_sercret.name}"
       },
       {
         "name": "RDS_USE_SSL",
