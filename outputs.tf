@@ -13,9 +13,3 @@ output "claimant_api_kafka_consumer" {
     service_name = aws_ecs_service.claimant_api_kafka_consumer.name
   }
 }
-
-output "claimant_api_kafka_consumer_iam" {
-  value = {
-    role = aws_iam_role.claimant_api_kafka_consumer
-  }
-}
