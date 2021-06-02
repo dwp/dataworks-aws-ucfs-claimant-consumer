@@ -197,4 +197,6 @@ locals {
     preprod     = false
     production  = false
   }
+
+  ingest_pushgateway_hostname = "${data.terraform_remote_state.ingestion.outputs.private_dns.ingest_service_discovery.name}.${data.terraform_remote_state.ingestion.outputs.private_dns.ingest_service_discovery_dns.name}"
 }
