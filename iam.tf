@@ -6,18 +6,6 @@ data "aws_ssm_parameter" "nino_salt_london_ssm_param" {
   name = data.terraform_remote_state.ucfs_claimant.outputs.nino_salt_london_ssm_param
 }
 
-resource "aws_iam_role" "claimant_api_kafka_consumer" {
-  name               = local.iam_name
-  assume_role_policy = data.terraform_remote_state.common.outputs.ecs_assume_role_policy_json
-
-  tags = merge(
-    local.common_tags,
-    {
-      Name = local.iam_name
-    }
-  )
-}
-
 resource "aws_iam_role_policy" "claimant_api_kafka_consumer" {
   name   = "claimant_api_kafka_consumer"
   policy = data.aws_iam_policy_document.claimant_api_kafka_consumer.json
