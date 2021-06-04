@@ -6,9 +6,11 @@ groups:
       - integration
       - preprod
       - production
+  
   - name: pull-request
     jobs:
       - dataworks-aws-ucfs-claimant-consumer-pr
+  
   - name: rotate-passwords
     jobs:
       - rotate-mysql-password-api-kafka-consumer-development
@@ -16,3 +18,7 @@ groups:
       - rotate-mysql-password-api-kafka-consumer-integration
       - rotate-mysql-password-api-kafka-consumer-preprod
       - rotate-mysql-password-api-kafka-consumer-production
+  
+  - name: update-pipeline
+    jobs:
+      - update-pipeline
