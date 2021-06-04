@@ -6,22 +6,10 @@ data "aws_ssm_parameter" "nino_salt_london_ssm_param" {
   name = data.terraform_remote_state.ucfs_claimant.outputs.nino_salt_london_ssm_param
 }
 
-resource "aws_iam_role" "claimant_api_kafka_consumer" {
-  name               = local.iam_name
-  assume_role_policy = data.terraform_remote_state.common.outputs.ecs_assume_role_policy_json
-
-  tags = merge(
-    local.common_tags,
-    {
-      Name = local.iam_name
-    }
-  )
-}
-
 resource "aws_iam_role_policy" "claimant_api_kafka_consumer" {
   name   = "claimant_api_kafka_consumer"
   policy = data.aws_iam_policy_document.claimant_api_kafka_consumer.json
-  role   = aws_iam_role.claimant_api_kafka_consumer.id
+  role   = data.terraform_remote_state.ucfs_claimant.outputs.claimant_api_kafka_consumer_iam_role.id
 }
 
 data "aws_iam_policy_document" "claimant_api_kafka_consumer" {
@@ -92,6 +80,6 @@ data "aws_iam_policy_document" "claimant_api_kafka_consumer" {
       "secretsmanager:GetSecretValue",
     ]
 
-    resources = [aws_secretsmanager_secret.claimant_api_kafka_consumer.arn]
+    resources = [data.terraform_remote_state.ucfs_claimant.outputs.claimant_api_kafka_consumer_rds_user_sercret.arn]
   }
 }

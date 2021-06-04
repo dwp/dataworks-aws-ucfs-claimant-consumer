@@ -85,8 +85,8 @@ locals {
 
   log_level = {
     development = "INFO"
-    qa          = "INFO"
-    integration = "INFO"
+    qa          = "DEBUG"
+    integration = "DEBUG"
     preprod     = "INFO"
     production  = "INFO"
   }
@@ -175,10 +175,10 @@ locals {
   }
 
   claimant_api_consumer_alert_on_running_tasks_less_than_desired = {
-    development = true
-    qa          = true
-    integration = true
-    preprod     = true
+    development = false
+    qa          = false
+    integration = false
+    preprod     = false
     production  = true
   }
 
@@ -189,4 +189,14 @@ locals {
     preprod     = false
     production  = false
   }
+
+  claimant_api_consumer_use_kafka_stub = {
+    development = true
+    qa          = true
+    integration = true
+    preprod     = false
+    production  = false
+  }
+
+  ingest_pushgateway_hostname = "${data.terraform_remote_state.ingestion.outputs.private_dns.ingest_service_discovery.name}.${data.terraform_remote_state.ingestion.outputs.private_dns.ingest_service_discovery_dns.name}"
 }
