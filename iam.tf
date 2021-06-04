@@ -78,6 +78,8 @@ data "aws_iam_policy_document" "claimant_api_kafka_consumer" {
     effect = "Allow"
     actions = [
       "secretsmanager:GetSecretValue",
+      "secretsmanager:DescribeSecret",
+      "secretsmanager:ListSecretVersionIds"
     ]
 
     resources = [data.terraform_remote_state.ucfs_claimant.outputs.claimant_api_kafka_consumer_rds_user_sercret.arn]
