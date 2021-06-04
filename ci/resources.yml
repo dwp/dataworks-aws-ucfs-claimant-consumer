@@ -5,7 +5,7 @@ resources:
       repository: dwp/dataworks-aws-ucfs-claimant-consumer
       access_token: ((dataworks-secrets.concourse_github_pat))
     webhook_token: ((dataworks.concourse_github_webhook_token))
-    check_every: 720h
+    check_every: 5m
 
   - name: dataworks-aws-ucfs-claimant-consumer
     type: git
@@ -14,4 +14,27 @@ resources:
       uri: https://github.com/dwp/dataworks-aws-ucfs-claimant-consumer.git
       access_token: ((dataworks-secrets.concourse_github_pat))
     webhook_token: ((dataworks.concourse_github_webhook_token))
-    check_every: 720h
+    check_every: 5m
+
+  - name: dataworks-aws-ucfs-claimant-consumer-update-pipeline
+    type: git
+    source:
+      branch: master
+      uri: https://github.com/dwp/dataworks-aws-ucfs-claimant-consumer.git
+      access_token: ((dataworks-secrets.concourse_github_pat))
+      paths:
+        - ci/*
+        - aviator.yml
+    webhook_token: ((dataworks.concourse_github_webhook_token))
+    check_every: 5m
+  
+  - name: ucfs-claimant
+    type: git
+    source:
+      branch: master
+      api_endpoint: https://((dataworks.enterprise_github_url))/api/v3/
+      username: ((dataworks.enterprise_github_username))
+      password: ((dataworks-secrets.enterprise_github_pat))
+      uri: https://((dataworks.enterprise_github_url))/dip/ucfs-claimant.git
+    check_every: 5m
+    webhook_token: ((dataworks.concourse_github_webhook_token))
