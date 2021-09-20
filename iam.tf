@@ -50,7 +50,7 @@ data "aws_iam_policy_document" "claimant_api_kafka_consumer" {
     sid       = "AllowSSMGetNinoSalt"
     effect    = "Allow"
     actions   = ["ssm:GetParameter"]
-    resources = [data.aws_ssm_parameter.nino_salt_london_ssm_param.arn, ]
+    resources = [data.aws_ssm_parameter.nino_salt_london_ssm_param.arn]
   }
 
   statement {
@@ -58,7 +58,7 @@ data "aws_iam_policy_document" "claimant_api_kafka_consumer" {
     effect  = "Allow"
     actions = ["kms:Decrypt", ]
 
-    resources = [data.terraform_remote_state.ucfs_claimant.outputs.ucfs_nino_salt_cmk_london.arn, ]
+    resources = [data.terraform_remote_state.ucfs_claimant.outputs.ucfs_nino_salt_cmk_london.arn]
   }
 
   statement {
@@ -70,7 +70,7 @@ data "aws_iam_policy_document" "claimant_api_kafka_consumer" {
       "kms:GenerateDataKey",
     ]
 
-    resources = [data.terraform_remote_state.ucfs_claimant.outputs.ucfs_claimant_api_etl_cmk.arn, data.terraform_remote_state.ucfs_claimant.outputs.ucfs_etl_cmk.arn]
+    resources = [data.terraform_remote_state.ucfs_claimant.outputs.ucfs_claimant_api_etl_cmk.arn]
   }
 
   statement {
