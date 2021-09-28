@@ -182,14 +182,6 @@ locals {
     production  = true
   }
 
-  claimant_api_consumer_use_ireland_kms = {
-    development = false
-    qa          = false
-    integration = false
-    preprod     = false
-    production  = false
-  }
-
   claimant_api_consumer_use_kafka_stub = {
     development = true
     qa          = true
