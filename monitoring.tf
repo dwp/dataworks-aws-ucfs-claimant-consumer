@@ -16,7 +16,7 @@ resource "aws_cloudwatch_metric_alarm" "successfully_processed_batch" {
 
   namespace           = local.claimant_api_consumer_metrics_namespace
   alarm_name          = "Claimant API Kafka Consumer - Lack of processed batches in the last 3 hours"
-  alarm_description   = "Managed by ${local.common_tags.Application} repository"
+  alarm_description   = "Managed by ${local.common_tags.DWX_Application} repository"
   alarm_actions       = [local.monitoring_topic_arn]
   evaluation_periods  = 3
   period              = 3600
@@ -53,7 +53,7 @@ resource "aws_cloudwatch_metric_alarm" "failed_processing_batch" {
 
   namespace           = local.claimant_api_consumer_metrics_namespace
   alarm_name          = "Claimant API Kafka Consumer - Failed to process batch"
-  alarm_description   = "Managed by ${local.common_tags.Application} repository"
+  alarm_description   = "Managed by ${local.common_tags.DWX_Application} repository"
   alarm_actions       = [local.monitoring_topic_arn]
   evaluation_periods  = 1
   period              = 300
@@ -74,7 +74,7 @@ resource "aws_cloudwatch_metric_alarm" "failed_processing_batch" {
 resource "aws_cloudwatch_metric_alarm" "running_tasks_less_than_desired" {
   count               = local.claimant_api_consumer_alert_on_running_tasks_less_than_desired[local.environment] ? 1 : 0
   alarm_name          = local.claimant_api_consumer_running_tasks_less_than_desired
-  alarm_description   = "Managed by ${local.common_tags.Application} repository"
+  alarm_description   = "Managed by ${local.common_tags.DWX_Application} repository"
   alarm_actions       = [local.monitoring_topic_arn]
   treat_missing_data  = "breaching"
   evaluation_periods  = 5
