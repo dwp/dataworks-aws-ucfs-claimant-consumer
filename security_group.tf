@@ -96,6 +96,6 @@ resource "aws_security_group_rule" "ucfs_claimant_consumer_to_dks" {
   from_port         = 8443
   to_port           = 8443
   protocol          = "tcp"
-  cidr_blocks       = data.terraform_remote_state.ingest.outputs.ingestion_subnets.cidr_block
+  cidr_blocks       = data.terraform_remote_state.ingestion.outputs.ingestion_subnets.cidr_block
   security_group_id = data.terraform_remote_state.crypto.outputs.dks_sg_id[local.environment]
 }
