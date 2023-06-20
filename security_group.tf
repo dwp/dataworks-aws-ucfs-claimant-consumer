@@ -88,3 +88,14 @@ resource "aws_security_group_rule" "ucfs_claimant_consumer_to_stub_ucfs_kafka" {
   to_port                  = data.terraform_remote_state.ingestion.outputs.stub_ucfs.stub_ucfs_kafka_ports[count.index]
   security_group_id        = data.terraform_remote_state.ingestion.outputs.stub_ucfs.sg_id
 }
+
+resource "aws_security_group_rule" "ucfs_claimant_consumer_to_dks" {
+  provider          = aws.management-crypto
+  description       = "UCFS claimant consumer to DKS"
+  type              = "ingress"
+  from_port         = 8443
+  to_port           = 8443
+  protocol          = "tcp"
+  cidr_blocks       = data.terraform_remote_state.ingest.outputs.ingestion_subnets.cidr_block
+  security_group_id = data.terraform_remote_state.crypto.outputs.dks_sg_id[local.environment]
+}
